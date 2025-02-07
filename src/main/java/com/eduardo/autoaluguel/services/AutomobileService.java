@@ -2,12 +2,14 @@ package com.eduardo.autoaluguel.services;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
 import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
+import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -53,7 +55,12 @@ public class AutomobileService {
 		if (!repository.existsById(id)) {
 			throw new ResourceNotFoundException("Automóvel não encontrado");
 		}
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		}
+	catch(DataIntegrityViolationException e) {
+		throw new DatabaseException("Não é possivel apagar esse veiculo");
+	}
 	}
 
 	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO) {
