@@ -2,6 +2,8 @@ package com.eduardo.autoaluguel.dtos;
 
 import java.time.Instant;
 
+import com.eduardo.autoaluguel.entities.Location;
+
 public class LocationDTO {
 
 	private Long id;
@@ -23,6 +25,15 @@ public class LocationDTO {
 		this.value = value;
 		this.client = client;
 		this.automobile = automobile;
+	}
+
+	public LocationDTO(Location location) {
+		id = location.getId();
+		rentalDate = location.getRentalDate();
+		returnDate = location.getReturnDate();
+		value = location.getValue();
+		client = new ClientDTO(location.getClient());
+		automobile = new AutomobileDTO(location.getAutomobile());
 	}
 
 	public Long getId() {
