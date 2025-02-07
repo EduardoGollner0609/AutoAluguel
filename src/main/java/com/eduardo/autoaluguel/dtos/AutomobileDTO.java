@@ -1,5 +1,7 @@
 package com.eduardo.autoaluguel.dtos;
 
+import com.eduardo.autoaluguel.entities.Automobile;
+
 public class AutomobileDTO {
 
 	private Long id;
@@ -25,6 +27,16 @@ public class AutomobileDTO {
 		this.valuePerDay = valuePerDay;
 		this.returned = returned;
 		this.model = model;
+	}
+
+	public AutomobileDTO(Automobile automobile) {
+		id = automobile.getId();
+		plate = automobile.getPlate();
+		color = automobile.getColor();
+		km = automobile.getKm();
+		valuePerDay = automobile.getValuePerDay();
+		returned = automobile.getReturned();
+		model = new ModelDTO(automobile.getModel());
 	}
 
 	public Long getId() {
