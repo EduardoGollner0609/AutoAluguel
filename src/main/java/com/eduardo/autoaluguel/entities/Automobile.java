@@ -21,12 +21,13 @@ public class Automobile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String placa;
+	private String plate;
 	@Column(name = "model_year")
 	private Integer year;
 	private String color;
 	private Long km;
 	private Double valuePerDay;
+	private Boolean returned;
 
 	@OneToMany(mappedBy = "automobile")
 	private List<Location> locations = new ArrayList<>();
@@ -38,14 +39,16 @@ public class Automobile {
 	public Automobile() {
 	}
 
-	public Automobile(Long id, String placa, Integer year, String color, Long km, Double valuePerDay, Model model) {
+	public Automobile(Long id, String plate, Integer year, String color, Long km, Double valuePerDay, Boolean returned,
+			Model model) {
 		super();
 		this.id = id;
-		this.placa = placa;
+		this.plate = plate;
 		this.year = year;
 		this.color = color;
 		this.km = km;
 		this.valuePerDay = valuePerDay;
+		this.returned = returned;
 		this.model = model;
 	}
 
@@ -57,12 +60,12 @@ public class Automobile {
 		this.id = id;
 	}
 
-	public String getPlaca() {
-		return placa;
+	public String getPlate() {
+		return plate;
 	}
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
+	public void setPlate(String plate) {
+		this.plate = plate;
 	}
 
 	public Integer getYear() {
@@ -99,6 +102,14 @@ public class Automobile {
 
 	public List<Location> getLocations() {
 		return locations;
+	}
+
+	public Boolean getReturned() {
+		return returned;
+	}
+
+	public void setReturned(Boolean returned) {
+		this.returned = returned;
 	}
 
 	public Model getModel() {

@@ -20,7 +20,7 @@ public class Brand {
 	private Long id;
 	private String name;
 
-	@OneToMany
+	@OneToMany(mappedBy = "brand")
 	private List<Model> models = new ArrayList<>();
 
 	public Brand() {

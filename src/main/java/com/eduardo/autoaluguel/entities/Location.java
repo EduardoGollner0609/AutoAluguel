@@ -21,7 +21,6 @@ public class Location {
 	private Long id;
 	private Instant rentalDate;
 	private Instant returnDate;
-	private Boolean returned;
 	@Column(name = "location_value")
 	private Double value;
 
@@ -36,13 +35,12 @@ public class Location {
 	public Location() {
 	}
 
-	public Location(Long id, Instant rentalDate, Instant returnDate, Boolean returned, Double value, Client client,
+	public Location(Long id, Instant rentalDate, Instant returnDate, Double value, Client client,
 			Automobile automobile) {
 		super();
 		this.id = id;
 		this.rentalDate = rentalDate;
 		this.returnDate = returnDate;
-		this.returned = returned;
 		this.value = value;
 		this.client = client;
 		this.automobile = automobile;
@@ -70,14 +68,6 @@ public class Location {
 
 	public void setReturnDate(Instant returnDate) {
 		this.returnDate = returnDate;
-	}
-
-	public Boolean getReturned() {
-		return returned;
-	}
-
-	public void setReturned(Boolean returned) {
-		this.returned = returned;
 	}
 
 	public Double getValue() {
