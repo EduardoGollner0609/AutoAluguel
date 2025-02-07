@@ -1,19 +1,27 @@
 package com.eduardo.autoaluguel.dtos;
 
+import com.eduardo.autoaluguel.entities.Model;
+
 public class ModelDTO {
 
 	private Long id;
 	private String name;
-	private String brand;
+	private BrandDTO brand;
 
 	public ModelDTO() {
 	}
 
-	public ModelDTO(Long id, String name, String brand) {
+	public ModelDTO(Long id, String name, BrandDTO brand) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.brand = brand;
+	}
+
+	public ModelDTO(Model model) {
+		id = model.getId();
+		name = model.getName();
+
 	}
 
 	public Long getId() {
@@ -32,11 +40,11 @@ public class ModelDTO {
 		this.name = name;
 	}
 
-	public String getBrand() {
+	public BrandDTO getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(BrandDTO brand) {
 		this.brand = brand;
 	}
 

@@ -1,13 +1,11 @@
 package com.eduardo.autoaluguel.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.eduardo.autoaluguel.entities.Brand;
 
 public class BrandDTO {
 
 	private Long id;
 	private String name;
-	private List<ModelDTO> models = new ArrayList<>();
 
 	public BrandDTO() {
 	}
@@ -16,6 +14,11 @@ public class BrandDTO {
 		super();
 		this.id = id;
 		this.name = name;
+	}
+
+	public BrandDTO(Brand brand) {
+		id = brand.getId();
+		name = brand.getName();
 	}
 
 	public Long getId() {
@@ -32,10 +35,6 @@ public class BrandDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<ModelDTO> getModels() {
-		return models;
 	}
 
 }

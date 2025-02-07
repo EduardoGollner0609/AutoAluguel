@@ -2,6 +2,8 @@ package com.eduardo.autoaluguel.dtos;
 
 import java.time.LocalDate;
 
+import com.eduardo.autoaluguel.entities.Client;
+
 public class ClientDTO {
 
 	private Long id;
@@ -25,6 +27,16 @@ public class ClientDTO {
 		this.phone = phone;
 		this.birthdate = birthdate;
 		this.address = address;
+	}
+
+	public ClientDTO(Client client) {
+		this.id = client.getId();
+		this.name = client.getName();
+		this.cpf = client.getCpf();
+		this.email = client.getEmail();
+		this.phone = client.getPhone();
+		this.birthdate = client.getBirthdate();
+		this.address = client.getAddress();
 	}
 
 	public Long getId() {
