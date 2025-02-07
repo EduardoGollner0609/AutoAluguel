@@ -3,6 +3,7 @@ package com.eduardo.autoaluguel.entities;
 import java.time.Instant;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Location {
 	private Instant rentalDate;
 	private Instant returnDate;
 	private Boolean returned;
+	@Column(name = "location_value")
 	private Double value;
 
 	@ManyToOne

@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -29,10 +31,14 @@ public class Automobile {
 	@OneToMany(mappedBy = "automobile")
 	private List<Location> locations = new ArrayList<>();
 
+	@ManyToOne
+	@JoinColumn(name = "model_id")
+	private Model model;
+
 	public Automobile() {
 	}
 
-	public Automobile(Long id, String placa, Integer year, String color, Long km, Double valuePerDay) {
+	public Automobile(Long id, String placa, Integer year, String color, Long km, Double valuePerDay, Model model) {
 		super();
 		this.id = id;
 		this.placa = placa;
@@ -40,6 +46,7 @@ public class Automobile {
 		this.color = color;
 		this.km = km;
 		this.valuePerDay = valuePerDay;
+		this.model = model;
 	}
 
 	public Long getId() {
@@ -92,6 +99,14 @@ public class Automobile {
 
 	public List<Location> getLocations() {
 		return locations;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
 	}
 
 	@Override
