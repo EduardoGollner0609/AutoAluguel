@@ -1,5 +1,7 @@
 package com.eduardo.autoaluguel.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class Automobile {
 	private String color;
 	private Long km;
 	private Double valuePerDay;
+
+	@OneToMany(mappedBy = "automobile")
+	private List<Location> locations = new ArrayList<>();
 
 	public Automobile() {
 	}
@@ -82,6 +88,10 @@ public class Automobile {
 
 	public void setValuePerDay(Double valuePerDay) {
 		this.valuePerDay = valuePerDay;
+	}
+
+	public List<Location> getLocations() {
+		return locations;
 	}
 
 	@Override
