@@ -19,7 +19,7 @@ export default function Header() {
                         </li>
                         <li className="header-option-item">
                             <NavLink to="/history">
-                                Alugar
+                                Histórico
                             </NavLink>
                         </li>
                     </ul>

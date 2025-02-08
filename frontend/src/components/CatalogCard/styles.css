@@ -1,0 +1,31 @@
+.catalog-card {
+  border: 1px solid #127ed6;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.catalog-card-top {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.catalog-card-bottom h3 {
+  color: #127ed6;
+}
+
+.catalog-card-top img {
+  width: 180px;
+  height: 150px;
+}
+
+.catalog-card-bottom {
+  padding: 10px 20px;
+  min-height: 110px;
+}
+
+.catalog-card-bottom p {
+  color: #5186b1;
+  font-weight: 500;
+  margin-top: 5px;
+}

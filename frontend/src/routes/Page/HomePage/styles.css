@@ -1,0 +1,11 @@
+.home-page-welcome {
+  margin: 10px 0;
+  text-align: center;
+  color: #127ed6;
+}
+
+.home-page-catalog-cards {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+}
