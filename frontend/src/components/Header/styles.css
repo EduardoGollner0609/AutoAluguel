@@ -16,3 +16,69 @@ header nav {
   display: flex;
   gap: 15px;
 }
+
+.header-menu-options-mobile {
+  display: none;
+}
+
+.options-mobile {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .options-mobile {
+    display: block;
+  }
+
+  .header-menu-options-mobile {
+    display: block;
+  }
+  .header-options-navegation {
+    display: none;
+  }
+
+  .header-menu-options-mobile img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .options-mobile {
+    position: fixed;
+    background-color: #127ed6;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60%;
+    padding: 20px 0;
+    z-index: 999;
+  }
+
+  .options-mobile h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .options-mobile-navegation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .options-mobile-navegation-item {
+    display: block;
+    padding: 10px 0;
+  }
+
+  .options-mobile-menu-background {
+    background-color: #00000034;
+    z-index: 888;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}

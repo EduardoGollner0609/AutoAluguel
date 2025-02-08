@@ -42,3 +42,12 @@ main {
   border-radius: 4px;
   background-color: #fff;
 }
+
+.option-navegation-header-active {
+  border-bottom: 2px solid #fff;
+}
+
+.option-navegation-header-mobile-active {
+  background-color: #fff;
+  color: #127ed6;
+}
