@@ -25,6 +25,10 @@ header nav {
   display: none;
 }
 
+.options-mobile-menu-background {
+  display: none;
+}
+
 @media (max-width: 480px) {
   .options-mobile {
     display: block;
@@ -33,6 +37,7 @@ header nav {
   .header-menu-options-mobile {
     display: block;
   }
+
   .header-options-navegation {
     display: none;
   }
@@ -73,6 +78,7 @@ header nav {
   }
 
   .options-mobile-menu-background {
+    display: block;
     background-color: #00000034;
     z-index: 888;
     position: fixed;

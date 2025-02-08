@@ -1,0 +1,58 @@
+.automobile-details-card {
+  margin-top: 10px;
+  border: 2px solid #127ed6;
+  padding: 15px 20px 20px 20px;
+  border-radius: 4px;
+}
+
+.automobile-details-card-top {
+  text-align: center;
+}
+
+.automobile-details-card-top img {
+  max-height: 200px;
+}
+
+.automobile-details-card-top h2 {
+  color: #127ed6;
+}
+
+.automobile-details-bottom {
+  display: flex;
+  justify-content: space-around;
+}
+
+.automobile-details-bottom-left,
+.automobile-details-bottom-right {
+  margin: auto 0;
+}
+
+.automobile-details-bottom-left p {
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+.automobile-details-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.automobile-details-btn {
+  background-color: #127ed6;
+  color: #fff;
+  padding: 7px 10px;
+  border-radius: 4px;
+  width: 200px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.automobile-details-returned-true {
+  color: #04750a;
+  font-weight: 500;
+}
+
+.automobile-details-returned-false {
+  color: #a10803;
+}

@@ -22,6 +22,11 @@ a {
   color: unset;
 }
 
+button {
+  border: none;
+  cursor: pointer;
+}
+
 html,
 body {
   background-color: aliceblue;
