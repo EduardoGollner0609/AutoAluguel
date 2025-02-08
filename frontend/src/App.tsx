@@ -1,10 +1,14 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-
+import Page from './routes/Page'
 function App() {
 
-
   return (
-    <h1>Olá mundo</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Page />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
