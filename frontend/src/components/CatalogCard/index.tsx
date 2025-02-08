@@ -2,7 +2,7 @@ import './styles.css';
 
 export default function CatalogCard() {
     return (
-        <div className="catalog-card">
+        <div className="catalog-card card">
             <div className="catalog-card-top">
                 <img src="https://tribunademinas.com.br/wp-content/uploads/2023/07/projecao-chevrolet-spin-2025-tudo-de-carro.jpg" alt="" />
             </div>

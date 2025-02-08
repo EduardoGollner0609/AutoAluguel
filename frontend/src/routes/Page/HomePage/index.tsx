@@ -4,7 +4,7 @@ import './styles.css';
 export default function HomePage() {
     return (
         <section id="home-page-section" className="container">
-            <div className="home-page-welcome">
+            <div className="home-page-welcome top-title">
                 <h1>Seja muito bem vindo</h1>
             </div>
             <div className="home-page-catalog-cards">
