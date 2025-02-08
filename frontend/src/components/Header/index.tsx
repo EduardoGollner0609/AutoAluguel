@@ -18,7 +18,7 @@ export default function Header() {
                             </NavLink>
                         </li>
                         <li className="header-option-item">
-                            <NavLink to="/painel">
+                            <NavLink to="/history">
                                 Alugar
                             </NavLink>
                         </li>
