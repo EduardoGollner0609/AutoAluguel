@@ -1,5 +1,5 @@
 .automobile-details-card {
-  margin-top: 10px;
+  margin-top: 20px;
   border: 2px solid #127ed6;
   padding: 15px 20px 20px 20px;
   border-radius: 4px;
@@ -11,6 +11,7 @@
 
 .automobile-details-card-top img {
   max-height: 300px;
+  max-width: 450px;
 }
 
 .automobile-details-card-top h2 {
@@ -55,4 +56,42 @@
 
 .automobile-details-returned-false {
   color: #a10803;
+}
+
+@media (max-width: 576px) {
+  .automobile-details-card-top img {
+    width: 75%;
+  }
+
+  .automobile-details-card-top h2 {
+    font-size: 20px;
+  }
+
+  .automobile-details-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .automobile-details-bottom-left h3 {
+    margin-top: 5px;
+    font-size: 18px;
+  }
+
+  .automobile-details-bottom-left {
+    text-align: center;
+  }
+
+  .automobile-details-bottom-right {
+    width: 100%;
+  }
+
+  .automobile-details-btns {
+    align-items: center;
+  }
+
+  .automobile-details-btn {
+    width: 100%;
+    max-width: 300px;
+  }
 }
