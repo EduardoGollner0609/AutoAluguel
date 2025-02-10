@@ -36,7 +36,7 @@ public class AutomobileController {
 	@GetMapping
 	public ResponseEntity<List<AutomobileDTO>> findAll() {
 		List<AutomobileDTO> automobiles = service.findAll();
-		return ResponseEntity.ofNullable(automobiles);
+		return ResponseEntity.ok(automobiles);
 	}
 
 	@GetMapping(value = "/{id}")
