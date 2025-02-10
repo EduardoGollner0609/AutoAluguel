@@ -3,12 +3,14 @@ import LocationCard from '../../../components/LocationCard';
 import './styles.css';
 import { LocationDTO } from '../../../models/location';
 import * as locationService from '../../../services/location-service';
+import ButtonNextPage from '../../../components/ButtonNextPage';
 
 export default function HistoryPage() {
 
     const [locations, setLocations] = useState<LocationDTO[]>([]);
 
     const [numberPage, setNumberPage] = useState<number>(0);
+    const [isLastPage, setIsLastPage] = useState(false);
 
     useEffect(() => {
         locationService.findAll(numberPage).then(response => { setLocations(response.data.content) })
@@ -24,6 +26,7 @@ export default function HistoryPage() {
                     locations.map(location => (<LocationCard key={location.id} location={location} />))
                 }
             </div>
+   
         </section>
     );
 }
