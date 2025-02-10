@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './styles.css';
 import menuOptionsMenu from '../../assets/menu-options-mobile.svg';
 import { useState } from 'react';
@@ -21,7 +21,10 @@ export default function Header() {
             <nav className="container">
 
                 <div className="header-title">
-                    <h1>AutoAluguel</h1>
+                    <Link to="/">
+                        <h1>AutoAluguel</h1>
+                    </Link>
+
                 </div>
                 <div className="header-options-navegation">
                     <ul className="header-options-navegation-list">

@@ -1,3 +1,7 @@
+.catalog-card {
+  text-align: center;
+}
+
 .catalog-card-top {
   padding: 10px;
   display: flex;
@@ -6,12 +10,11 @@
 
 .catalog-card-bottom h3 {
   color: #127ed6;
-  text-align: center;
 }
 
 .catalog-card-top img {
-  width: 180px;
-  height: 150px;
+  max-width: 180px;
+  max-height: 150px;
 }
 
 .catalog-card-bottom {

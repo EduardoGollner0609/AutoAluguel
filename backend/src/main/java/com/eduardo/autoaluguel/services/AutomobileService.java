@@ -28,7 +28,7 @@ public class AutomobileService {
 
 	// Read (FindAll)
 	public List<AutomobileDTO> findAll() {
-		List<Automobile> automobiles = repository.findAll();
+		List<Automobile> automobiles = repository.findAllOrderByReturned();
 		return automobiles.stream().map(automobile -> new AutomobileDTO(automobile)).toList();
 	}
 
