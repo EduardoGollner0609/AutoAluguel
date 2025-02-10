@@ -1,19 +1,27 @@
 import { NavLink } from 'react-router-dom';
 import './styles.css';
+import { AutomobileDTO } from '../../models/automobile';
 
-export default function CatalogCard() {
+type Props = {
+    automobile: AutomobileDTO
+}
+export default function CatalogCard({ automobile }: Props) {
     return (
-        <NavLink to="/automobile-details">
+        <NavLink to={`/automobile-details/${automobile.id}`}>
             <div className="catalog-card card">
                 <div className="catalog-card-top">
-                    <img src="https://tribunademinas.com.br/wp-content/uploads/2023/07/projecao-chevrolet-spin-2025-tudo-de-carro.jpg" alt="" />
+                    <img src={automobile.imgUrl} alt="" />
                 </div>
                 <div className="catalog-card-bottom">
-                    <h3>Spin 2025</h3>
+                    <h3>{automobile.model.name} {automobile.year}</h3>
                     <div className="catalog-card-bottom-details">
-                        <p>Placa: ssej2093</p>
-                        <p>KM: 200.0</p>
-                        <p>disponivel</p>
+                        <p>Placa: {automobile.plate}</p>
+                        <p>KM: {automobile.km}</p>
+                        {
+                            automobile.returned ? <p>Disponivel</p>
+                                :
+                                <p>indisponivel</p>
+                        }
                     </div>
                 </div>
             </div>

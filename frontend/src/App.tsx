@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Page />} >
           <Route index element={<HomePage />} />
           <Route path="history" element={<HistoryPage />} />
-          <Route path="automobile-details" element={<AutomobileDetails />} />
+          <Route path="automobile-details/:automobileId" element={<AutomobileDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -5,6 +5,7 @@ import com.eduardo.autoaluguel.entities.Automobile;
 public class AutomobileDTO {
 
 	private Long id;
+	private String imgUrl;
 	private String plate;
 	private Integer year;
 	private String color;
@@ -16,10 +17,11 @@ public class AutomobileDTO {
 	public AutomobileDTO() {
 	}
 
-	public AutomobileDTO(Long id, String plate, Integer year, String color, Long km, Double valuePerDay,
+	public AutomobileDTO(Long id, String imgUrl, String plate, Integer year, String color, Long km, Double valuePerDay,
 			Boolean returned, ModelDTO model) {
 		super();
 		this.id = id;
+		this.imgUrl = imgUrl;
 		this.plate = plate;
 		this.year = year;
 		this.color = color;
@@ -31,6 +33,7 @@ public class AutomobileDTO {
 
 	public AutomobileDTO(Automobile automobile) {
 		id = automobile.getId();
+		imgUrl = automobile.getImgUrl();
 		plate = automobile.getPlate();
 		color = automobile.getColor();
 		km = automobile.getKm();
@@ -45,6 +48,14 @@ public class AutomobileDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String getPlate() {

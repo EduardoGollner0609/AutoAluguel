@@ -21,6 +21,7 @@ public class Automobile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String imgUrl;
 	private String plate;
 	@Column(name = "model_year")
 	private Integer year;
@@ -39,10 +40,11 @@ public class Automobile {
 	public Automobile() {
 	}
 
-	public Automobile(Long id, String plate, Integer year, String color, Long km, Double valuePerDay, Boolean returned,
-			Model model) {
+	public Automobile(Long id, String imgUrl, String plate, Integer year, String color, Long km, Double valuePerDay,
+			Boolean returned, Model model) {
 		super();
 		this.id = id;
+		this.imgUrl = imgUrl;
 		this.plate = plate;
 		this.year = year;
 		this.color = color;
@@ -58,6 +60,14 @@ public class Automobile {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String getPlate() {

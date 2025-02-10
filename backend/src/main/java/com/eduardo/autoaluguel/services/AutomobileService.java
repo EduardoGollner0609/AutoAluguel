@@ -57,13 +57,13 @@ public class AutomobileService {
 		}
 		try {
 			repository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Não é possivel apagar esse veiculo");
 		}
-	catch(DataIntegrityViolationException e) {
-		throw new DatabaseException("Não é possivel apagar esse veiculo");
-	}
 	}
 
 	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO) {
+		automobile.setImgUrl(automobile.getImgUrl());
 		automobile.setPlate(automobileDTO.getPlate());
 		automobile.setColor(automobileDTO.getColor());
 		automobile.setKm(automobileDTO.getKm());
