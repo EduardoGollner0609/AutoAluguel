@@ -8,11 +8,11 @@ export default function HistoryPage() {
 
     const [locations, setLocations] = useState<LocationDTO[]>([]);
 
+    const [numberPage, setNumberPage] = useState<number>(0);
+
     useEffect(() => {
-        locationService.findAll().then(response => {
-            setLocations(response.data.content)
-        })
-    }, [])
+        locationService.findAll(numberPage).then(response => { setLocations(response.data.content) })
+    }, []);
 
     return (
         <section id="history-page-section" className="container">
