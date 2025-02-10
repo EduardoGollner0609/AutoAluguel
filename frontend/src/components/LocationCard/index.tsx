@@ -2,6 +2,7 @@ import './styles.css';
 import checkLocationIcon from '../../assets/check-location-icon.svg';
 import { useState } from 'react';
 import { LocationDTO } from '../../models/location';
+import { format } from 'date-fns';
 
 type Props = {
     location: LocationDTO
@@ -15,6 +16,10 @@ export default function LocationCard({ location }: Props) {
         setCheckedConfirm(true);
     }
 
+    function formatDate(date: string) {
+        return format(date, 'dd/MM/yyyy HH:mm')
+    }
+
     return (
         <div className="location-card card">
 
@@ -24,7 +29,7 @@ export default function LocationCard({ location }: Props) {
             </div>
             <div className="location-card-location-details">
                 <p>Placa: {location.automobile.plate}</p>
-                <p>{location.rentalDate} - {location.returnDate}</p>
+                <p>{formatDate(location.rentalDate)} - {formatDate(location.returnDate)}</p>
                 <p>{location.client.name}</p>
                 <p>Valor Total: R$ {location.value}</p>
             </div>
