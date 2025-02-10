@@ -12,9 +12,18 @@ export default function HistoryPage() {
     const [numberPage, setNumberPage] = useState<number>(0);
     const [isLastPage, setIsLastPage] = useState(false);
 
+
     useEffect(() => {
-        locationService.findAll(numberPage).then(response => { setLocations(response.data.content) })
-    }, []);
+        locationService.findAll(numberPage).then(response => {
+            const nextPage = response.data.content;
+            setLocations(locations.concat(nextPage))
+            setIsLastPage(response.data.last);
+        })
+    }, [numberPage]);
+
+    function handleNextPageClick() {
+        setNumberPage(numberPage + 1);
+    }
 
     return (
         <section id="history-page-section" className="container">
@@ -26,7 +35,9 @@ export default function HistoryPage() {
                     locations.map(location => (<LocationCard key={location.id} location={location} />))
                 }
             </div>
-   
+            {
+                !isLastPage && <ButtonNextPage onNextPage={handleNextPageClick} />
+            }
         </section>
     );
 }

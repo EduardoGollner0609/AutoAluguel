@@ -29,7 +29,8 @@ export default function LocationCard({ location }: Props) {
             </div>
             <div className="location-card-location-details">
                 <p>Placa: {location.automobile.plate}</p>
-                <p>{formatDate(location.rentalDate)} - {formatDate(location.returnDate)}</p>
+                <p>Data de locação: {formatDate(location.rentalDate)} </p>
+                <p>Data de entrega: {formatDate(location.returnDate)}</p>
                 <p>{location.client.name}</p>
                 <p>Valor Total: R$ {location.value}</p>
             </div>
