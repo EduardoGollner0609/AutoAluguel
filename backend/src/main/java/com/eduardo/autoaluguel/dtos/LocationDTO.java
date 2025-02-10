@@ -10,13 +10,13 @@ public class LocationDTO {
 	private Instant rentalDate;
 	private Instant returnDate;
 	private Double value;
-	private ClientDTO client;
+	private ClientMinDTO client;
 	private AutomobileDTO automobile;
 
 	public LocationDTO() {
 	}
 
-	public LocationDTO(Long id, Instant rentalDate, Instant returnDate, Double value, ClientDTO client,
+	public LocationDTO(Long id, Instant rentalDate, Instant returnDate, Double value, ClientMinDTO client,
 			AutomobileDTO automobile) {
 		super();
 		this.id = id;
@@ -32,7 +32,7 @@ public class LocationDTO {
 		rentalDate = location.getRentalDate();
 		returnDate = location.getReturnDate();
 		value = location.getValue();
-		client = new ClientDTO(location.getClient());
+		client = new ClientMinDTO(location.getClient());
 		automobile = new AutomobileDTO(location.getAutomobile());
 	}
 
@@ -68,11 +68,11 @@ public class LocationDTO {
 		this.value = value;
 	}
 
-	public ClientDTO getClient() {
+	public ClientMinDTO getClient() {
 		return client;
 	}
 
-	public void setClient(ClientDTO client) {
+	public void setClient(ClientMinDTO client) {
 		this.client = client;
 	}
 

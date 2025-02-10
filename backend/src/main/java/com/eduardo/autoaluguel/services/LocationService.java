@@ -2,11 +2,11 @@ package com.eduardo.autoaluguel.services;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.eduardo.autoaluguel.dtos.LocationDTO;
@@ -33,9 +33,9 @@ public class LocationService {
 	}
 
 	// Read(FindAll)
-	public List<LocationDTO> findAll() {
-		List<Location> locations = new ArrayList<>();
-		return locations.stream().map(location -> new LocationDTO(location)).toList();
+	public Page<LocationDTO> findAll(Pageable pageable) {
+		Page<Location> locations = repository.findAll(pageable);
+		return locations.map(location -> new LocationDTO(location));
 	}
 
 	// Read(FindById)
