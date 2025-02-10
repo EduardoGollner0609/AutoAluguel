@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
 import com.eduardo.autoaluguel.entities.Automobile;
@@ -29,12 +30,14 @@ public class AutomobileService {
 	}
 
 	// Read (FindAll)
+	@Transactional(readOnly = true)
 	public List<AutomobileDTO> findAll() {
 		List<Automobile> automobiles = repository.findAllOrderByReturned();
 		return automobiles.stream().map(automobile -> new AutomobileDTO(automobile)).toList();
 	}
 
 	// Read (FindById)
+	@Transactional(readOnly = true)
 	public AutomobileDTO findById(Long id) {
 		Automobile automobile = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Automóvel não encontrado"));
