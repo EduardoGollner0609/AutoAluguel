@@ -14,7 +14,7 @@ export type AutomobileDTO = {
   year: number;
   color: string;
   km: number;
-  valuePerday: number;
+  valuePerDay: number;
   returned: boolean;
   model: ModelDTO;
 };

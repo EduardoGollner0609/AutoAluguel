@@ -21,14 +21,15 @@ export default function AutomobileDetails() {
             <div className="automobile-details-card">
                 <div className="automobile-details-card-top">
                     <img src={automobile?.imgUrl} alt="" />
-                    <h2>{automobile?.model.name} {automobile?.year}</h2>
+                    <h2>{`${automobile?.model.brand.name} ${automobile?.model.name} ${automobile?.year}`}</h2>
                 </div>
                 <div className="automobile-details-bottom">
                     <div className="automobile-details-bottom-left">
                         <h3>Descrições</h3>
+                        <p>Marca: {automobile?.model.brand.name}</p>
                         <p>Placa: {automobile?.plate}</p>
                         <p>Km: {automobile?.km}</p>
-                        <p>Valor por dia: R${automobile?.valuePerday.toFixed(2)}</p>
+                        <p>Valor por dia: R${automobile?.valuePerDay.toFixed(2)}</p>
                         {
                             automobile?.returned ?
                                 <p className="automobile-details-returned-true">

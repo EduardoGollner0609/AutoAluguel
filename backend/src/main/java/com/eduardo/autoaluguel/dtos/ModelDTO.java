@@ -21,7 +21,7 @@ public class ModelDTO {
 	public ModelDTO(Model model) {
 		id = model.getId();
 		name = model.getName();
-
+		brand = new BrandDTO(model.getBrand());
 	}
 
 	public Long getId() {

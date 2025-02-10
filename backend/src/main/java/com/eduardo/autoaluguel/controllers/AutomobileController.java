@@ -19,7 +19,7 @@ import com.eduardo.autoaluguel.dtos.AutomobileDTO;
 import com.eduardo.autoaluguel.services.AutomobileService;
 
 @RestController
-@RequestMapping(value = "/automobilies")
+@RequestMapping(value = "/automobiles")
 public class AutomobileController {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class AutomobileController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<AutomobileDTO> findById(@PathVariable Long id) {
-		AutomobileDTO automobileDTO = new AutomobileDTO();
+		AutomobileDTO automobileDTO = service.findById(id);
 		return ResponseEntity.ok(automobileDTO);
 	}
 

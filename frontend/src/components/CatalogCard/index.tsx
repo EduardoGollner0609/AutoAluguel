@@ -13,7 +13,7 @@ export default function CatalogCard({ automobile }: Props) {
                     <img src={automobile.imgUrl} alt="" />
                 </div>
                 <div className="catalog-card-bottom">
-                    <h3>{automobile.model.name} {automobile.year}</h3>
+                    <h3>{`${automobile.model.name} ${automobile.year}`}</h3>
                     <div className="catalog-card-bottom-details">
                         <p>Placa: {automobile.plate}</p>
                         <p>KM: {automobile.km}</p>

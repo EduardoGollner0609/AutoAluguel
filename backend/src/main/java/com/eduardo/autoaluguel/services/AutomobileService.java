@@ -2,6 +2,7 @@ package com.eduardo.autoaluguel.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class AutomobileService {
 
+	@Autowired
 	private AutomobileRepository repository;
 
 	// Create
@@ -63,7 +65,7 @@ public class AutomobileService {
 	}
 
 	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO) {
-		automobile.setImgUrl(automobile.getImgUrl());
+		automobile.setImgUrl(automobileDTO.getImgUrl());
 		automobile.setPlate(automobileDTO.getPlate());
 		automobile.setColor(automobileDTO.getColor());
 		automobile.setKm(automobileDTO.getKm());

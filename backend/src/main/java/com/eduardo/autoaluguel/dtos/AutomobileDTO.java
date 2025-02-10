@@ -35,6 +35,7 @@ public class AutomobileDTO {
 		id = automobile.getId();
 		imgUrl = automobile.getImgUrl();
 		plate = automobile.getPlate();
+		year = automobile.getYear();
 		color = automobile.getColor();
 		km = automobile.getKm();
 		valuePerDay = automobile.getValuePerDay();
