@@ -1,8 +1,13 @@
 import './styles.css';
 import checkLocationIcon from '../../assets/check-location-icon.svg';
 import { useState } from 'react';
+import { LocationDTO } from '../../models/location';
 
-export default function LocationCard() {
+type Props = {
+    location: LocationDTO
+}
+
+export default function LocationCard({ location }: Props) {
 
     const [chekedConfirm, setCheckedConfirm] = useState(false);
 
@@ -14,14 +19,14 @@ export default function LocationCard() {
         <div className="location-card card">
 
             <div className="location-card-automobile-details">
-                <img src="https://tribunademinas.com.br/wp-content/uploads/2023/07/projecao-chevrolet-spin-2025-tudo-de-carro.jpg" alt="" />
-                <h3>Spin 2025</h3>
+                <img src={location.automobile.imgUrl} alt="" />
+                <h3>{`${location.automobile.model.brand.name} ${location.automobile.model.name} ${location.automobile.year}`}</h3>
             </div>
             <div className="location-card-location-details">
-                <p>Placa: 22ddd2</p>
-                <p>06/02/2025 - 12/04/2025</p>
-                <p>Ricardo Nunes São Paole</p>
-                <p>Valor Total: R$ 700</p>
+                <p>Placa: {location.automobile.plate}</p>
+                <p>{location.rentalDate} - {location.returnDate}</p>
+                <p>{location.client.name}</p>
+                <p>Valor Total: R$ {location.value}</p>
             </div>
             <div className="location-check-confirm">
                 {

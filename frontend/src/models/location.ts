@@ -1,11 +1,11 @@
 import { AutomobileDTO } from "./automobile";
-import { ClientDTO } from "./client";
+import { ClientMinDTO } from "./client";
 
 export type LocationDTO = {
   id: number;
-  rentalDate: Date;
-  returnDate: Date;
+  rentalDate: string;
+  returnDate: string;
   value: number;
-  client: ClientDTO;
+  client: ClientMinDTO;
   automobile: AutomobileDTO;
 };

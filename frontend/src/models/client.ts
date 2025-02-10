@@ -1,3 +1,9 @@
+export type ClientMinDTO = {
+  id: number;
+  name: string;
+  cpf: string;
+};
+
 export type ClientDTO = {
   id: number;
   name: string;

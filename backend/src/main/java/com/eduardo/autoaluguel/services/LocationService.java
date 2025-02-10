@@ -33,8 +33,8 @@ public class LocationService {
 	}
 
 	// Read(FindAll)
-	public Page<LocationDTO> findAll(Pageable pageable) {
-		Page<Location> locations = repository.findAll(pageable);
+	public Page<LocationDTO> findAllPaged(Pageable pageable) {
+		Page<Location> locations = repository.findAllPaged(pageable);
 		return locations.map(location -> new LocationDTO(location));
 	}
 
