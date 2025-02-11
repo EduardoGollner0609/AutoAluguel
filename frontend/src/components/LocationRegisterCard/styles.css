@@ -16,14 +16,14 @@
   background-color: #fff;
   width: 100%;
   max-width: 450px;
-  height: 250px;
+  min-height: 220px;
   border-radius: 4px;
 }
 
 .location-register-card h2 {
   color: #127ed6;
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .location-register-card-search {
@@ -56,4 +56,28 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+
+.location-register-card-finally h3 {
+  color: #127ed6;
+  margin-bottom: 5px;
+}
+
+.location-register-card-finally p {
+  color: #636363;
+  font-weight: 500;
+}
+
+.location-register-card-finally-data-client,
+.location-register-card-finally-data-automobile {
+  margin-bottom: 20px;
+}
+
+.location-register-card-finally-btn button {
+  background-color: #127ed6;
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: #fff;
+  width: 100%;
 }

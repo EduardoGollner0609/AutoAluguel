@@ -31,7 +31,7 @@ export default function AutomobileDetails() {
                 automobile && <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} />
             }
             {
-                rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} />
+                rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile}/>
             }
         </section>
     );
