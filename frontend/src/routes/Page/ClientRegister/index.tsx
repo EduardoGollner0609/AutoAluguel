@@ -103,7 +103,7 @@ export function ClientRegister() {
         }
 
         const requestBody = forms.toValues(formData);
-        console.log(requestBody)
+        
         clientService.insert(requestBody).then(() => {
             setCardSucessVissible(true);
         }).catch(error => {

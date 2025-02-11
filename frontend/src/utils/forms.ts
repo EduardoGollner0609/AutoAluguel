@@ -94,3 +94,13 @@ export function setBackendErrors(inputs: any, erros: any[]) {
 
   return newInputs;
 }
+
+export function setBackEndError(input: any, fieldName: string, error: any) {
+  const newInput = { ...input };
+
+  newInput[fieldName].message = error;
+  newInput[fieldName].dirty = "true";
+  newInput[fieldName].invalid = "true";
+
+  return newInput;
+}
