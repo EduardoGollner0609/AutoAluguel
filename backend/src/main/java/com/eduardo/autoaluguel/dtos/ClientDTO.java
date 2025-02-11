@@ -4,14 +4,28 @@ import java.time.LocalDate;
 
 import com.eduardo.autoaluguel.entities.Client;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+
 public class ClientDTO {
 
 	private Long id;
+	@NotBlank(message = "Campo requerido")
+	@Size(min = 5, max = 50, message = "O nome deve ter entre 5 a 50 caracteres")
 	private String name;
+	@NotBlank(message = "Campo requerido")
 	private String cpf;
+	@NotBlank(message = "Campo requerido")
+	@Email(message = "Email inválido")
 	private String email;
+	@NotBlank(message = "Campo requerido")
 	private String phone;
+	@PastOrPresent
 	private LocalDate birthdate;
+	@NotBlank(message = "Campo requerido")
+	@Size(min = 8, message = "Minimo de 8 caracteres")
 	private String address;
 
 	public ClientDTO() {

@@ -15,6 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.eduardo.autoaluguel.dtos.ClientDTO;
 import com.eduardo.autoaluguel.services.ClientService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController {
@@ -23,7 +25,7 @@ public class ClientController {
 	private ClientService service;
 
 	@PostMapping
-	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO clientDTO) {
+	public ResponseEntity<ClientDTO> insert(@RequestBody @Valid ClientDTO clientDTO) {
 		clientDTO = service.insert(clientDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientDTO.getId())
 				.toUri();

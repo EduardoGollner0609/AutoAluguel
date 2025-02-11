@@ -19,7 +19,7 @@ export function ClientRegister() {
                 type: "text",
                 placeholder: "Nome",
                 validation: function (value: string) {
-                    return /^.{5,80}$/.test(value);
+                    return /^.{5,50}$/.test(value);
                 },
                 message: "Favor informar um nome de 5 a 80 caracteres",
             },
