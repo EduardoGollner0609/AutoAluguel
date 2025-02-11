@@ -60,3 +60,27 @@ main {
   background-color: #fff;
   color: #127ed6;
 }
+
+.form-error {
+  color: #b11717;
+  font-size: 14px;
+  padding-left: 4px;
+  display: none;
+}
+
+.form-item-input [data-dirty="true"][data-invalid="true"] {
+  border: 2px solid #b11717;
+}
+
+.form-item-input [data-dirty="true"][data-invalid="true"] ~ div {
+  display: unset;
+}
+
+.form-global-error {
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  color: #b11717;
+}

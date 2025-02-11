@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './styles.css';
 
 type Props = {
@@ -17,9 +18,9 @@ export default function LocationRegisterCard({ rentCardVisible }: Props) {
                     <button>Buscar</button>
                 </div>
                 <div className="location-register-card-invite-register-client">
-                <a href="">Cliente não tem cadastro</a>
+                    <Link to="/user-register">Cliente não tem cadastro</Link>
                 </div>
-           
+
             </div>
         </>
 
