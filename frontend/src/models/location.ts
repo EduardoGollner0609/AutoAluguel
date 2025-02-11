@@ -1,5 +1,5 @@
 import { AutomobileDTO } from "./automobile";
-import { ClientMinDTO } from "./client";
+import { ClientDTO, ClientMinDTO } from "./client";
 
 export type LocationDTO = {
   id: number;
@@ -8,4 +8,9 @@ export type LocationDTO = {
   value: number;
   client: ClientMinDTO;
   automobile: AutomobileDTO;
+};
+
+export type LocationInsertDTO = {
+  client: ClientDTO | undefined;
+  automobile: AutomobileDTO | undefined;
 };

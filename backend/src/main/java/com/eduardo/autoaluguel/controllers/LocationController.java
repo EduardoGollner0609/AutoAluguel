@@ -27,11 +27,11 @@ public class LocationController {
 	private LocationService service;
 
 	@PostMapping
-	public ResponseEntity<LocationDTO> insert(@RequestBody LocationDTO locationDTO) {
-		locationDTO = service.insert(locationDTO);
+	public ResponseEntity<Void> insert(@RequestBody LocationDTO locationDTO) {
+		service.insert(locationDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(locationDTO.getId())
 				.toUri();
-		return ResponseEntity.created(uri).body(locationDTO);
+		return ResponseEntity.created(uri).build();
 	}
 
 	@GetMapping

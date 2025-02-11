@@ -6,6 +6,9 @@ import * as forms from '../../utils/forms';
 import * as clientService from '../../services/client-service';
 import { ClientDTO } from '../../models/client';
 import { AutomobileDTO } from '../../models/automobile';
+import { LocationInsertDTO } from '../../models/location';
+import * as locationService from '../../services/location-service';
+import { CardSucess } from '../CardSucess';
 
 type Props = {
     automobile: AutomobileDTO | undefined,
@@ -17,6 +20,10 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
     const [formData, setFormData] = useState(formEmpty);
 
     const [client, setClient] = useState<ClientDTO>();
+
+    const [location, setLocation] = useState<LocationInsertDTO>();
+
+    const [messageSucess, setMessageSucess] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -42,7 +49,7 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
         setFormData(forms.dirtyAndValidate(formData, name));
     }
 
-    function handleSubmit(event: any) {
+    function handleSubmitSearchCpf(event: any) {
         event.preventDefault();
 
         const formDataValidated = forms.dirtyAndValidateAll(formData);
@@ -63,6 +70,22 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
 
     }
 
+    function handleSubmitLocation() {
+
+        const newLocation: LocationInsertDTO = {
+            automobile: automobile,
+            client: client,
+        }
+        
+        console.log(newLocation)
+        setLocation(newLocation);
+
+        locationService.insert(location).then(() => {
+            rentCardVisible();
+            setMessageSucess(true);
+        });
+    }
+
     return (
         <>
             <div className="location-register-card-background" onClick={rentCardVisible}>
@@ -72,18 +95,23 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
                 {
                     !client ?
                         <>
-                            <div className="location-register-card-search form-item-input">
-                                <label>Digite um CPF</label>
-                                <FormInput
-                                    {...formData.cpf}
-                                    onTurnDirty={handleTurnDirty}
-                                    onChange={handleInputChange} />
-                                <div className="form-error">{formData.cpf.message}</div>
-                                <button onClick={handleSubmit}>Buscar</button>
-                            </div>
-                            <div className="location-register-card-invite-register-client">
-                                <Link to="/user-register">Cliente não tem cadastro</Link>
-                            </div>
+                            <form onSubmit={handleSubmitSearchCpf}>
+                                <div className="location-register-card-search form-item-input">
+
+                                    <label>Digite um CPF</label>
+                                    <FormInput
+                                        autoFocus
+                                        {...formData.cpf}
+                                        onTurnDirty={handleTurnDirty}
+                                        onChange={handleInputChange} />
+                                    <div className="form-error">{formData.cpf.message}</div>
+                                    <button onClick={handleSubmitSearchCpf}>Buscar</button>
+                                </div>
+                                <div className="location-register-card-invite-register-client">
+                                    <Link to="/user-register">Cliente não tem cadastro</Link>
+                                </div>
+                            </form>
+
                         </>
                         :
                         <>
@@ -109,14 +137,15 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
                                     }
                                 </div>
                                 <div className="location-register-card-finally-btn">
-                                    <button>Alugar</button>
+                                    <button onClick={handleSubmitLocation}>Alugar</button>
                                 </div>
                             </div>
                         </>
                 }
-
-
             </div>
+            {
+                messageSucess && <CardSucess closeCard={() => setMessageSucess(false)} message="Alugado" />
+            }
         </>
 
     );

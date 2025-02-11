@@ -30,9 +30,14 @@ export default function LocationCard({ location }: Props) {
             <div className="location-card-location-details">
                 <p>Placa: {location.automobile.plate}</p>
                 <p>Data de locação: {formatDate(location.rentalDate)} </p>
-                <p>Data de entrega: {formatDate(location.returnDate)}</p>
-                <p>{location.client.name}</p>
-                <p>Valor Total: R$ {location.value}</p>
+                {
+                    location.returnDate && <p>Data de entrega: {formatDate(location.returnDate)}</p>
+                }
+                <p>Cliente: {location.client.name}</p>
+                {
+                    location.value && <p>Valor Total: R$ {location.value}</p>
+                }
+
             </div>
             <div className="location-check-confirm">
                 {
@@ -46,7 +51,6 @@ export default function LocationCard({ location }: Props) {
                             <p>Devolvido</p>
                         </div>
                 }
-
             </div>
 
         </div>

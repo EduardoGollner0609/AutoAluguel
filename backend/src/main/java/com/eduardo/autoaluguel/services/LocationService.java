@@ -27,10 +27,10 @@ public class LocationService {
 	private LocationRepository repository;
 
 	// Create
-	public LocationDTO insert(LocationDTO locationDTO) {
+	public void insert(LocationDTO locationDTO) {
 		Location location = new Location();
 		copyDtoToEntity(location, locationDTO);
-		return new LocationDTO(repository.save(location));
+		repository.save(location);
 	}
 
 	// Read(FindAll)
@@ -89,18 +89,20 @@ public class LocationService {
 	}
 
 	private void copyDtoToEntity(Location location, LocationDTO locationDTO) {
-		location.setRentalDate(locationDTO.getRentalDate());
-		location.setReturnDate(locationDTO.getReturnDate());
+		location.setRentalDate(Instant.now());
 
 		Automobile automobile = new Automobile();
-		automobile.setId(locationDTO.getId());
+		automobile.setId(locationDTO.getAutomobile().getId());
 		location.setAutomobile(automobile);
 
 		Client client = new Client();
 		client.setId(locationDTO.getClient().getId());
 		location.setClient(client);
 
-		double totalValue = calculateTotalRentalValue(locationDTO);
-		location.setValue(totalValue);
+		if (locationDTO.getReturnDate() != null) {
+			double totalValue = calculateTotalRentalValue(locationDTO);
+			location.setValue(totalValue);
+		}
+
 	}
 }
