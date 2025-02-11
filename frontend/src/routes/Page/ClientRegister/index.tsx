@@ -2,10 +2,13 @@ import { useState } from 'react';
 import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
+import * as clientService from '../../../services/client-service';
+import { CardSucess } from '../../../components/CardSucess';
 
 export function ClientRegister() {
 
     const [formData, setFormData] = useState(formEmpty);
+    const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -87,6 +90,24 @@ export function ClientRegister() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
+
+        const formDataValidated = forms.dirtyAndValidateAll(formData);
+
+        if (forms.hasAnyInvalid(formDataValidated)) {
+            setFormData(formDataValidated);
+            return;
+        }
+
+        const requestBody = forms.toValues(formData);
+
+        clientService.insert(requestBody).then(() => {
+            setCardSucessVissible(true);
+        }).catch(error => {
+            const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
+            setFormData(newInputs);
+        });
+
+        setFormData(formEmpty);
     }
 
     return (
@@ -137,9 +158,11 @@ export function ClientRegister() {
                     <div className="client-register-card-btn">
                         <button>Criar</button>
                     </div>
-
                 </form>
             </div>
+            {
+                cardSucessVisible && <CardSucess message="Salvo" />
+            }
         </section>
     );
 }

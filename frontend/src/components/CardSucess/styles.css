@@ -1,0 +1,25 @@
+.card-sucess-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.519);
+}
+
+.card-sucess {
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 100%;
+  max-width: 450px;
+  height: 250px;
+  border-radius: 4px;
+}
+
+.card-sucess h2 {
+  color: #127ed6;
+}
