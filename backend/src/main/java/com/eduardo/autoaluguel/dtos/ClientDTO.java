@@ -22,7 +22,7 @@ public class ClientDTO {
 	private String email;
 	@NotBlank(message = "Campo requerido")
 	private String phone;
-	@PastOrPresent
+	@PastOrPresent(message = "Data inválida")
 	private LocalDate birthdate;
 	@NotBlank(message = "Campo requerido")
 	@Size(min = 8, message = "Minimo de 8 caracteres")
