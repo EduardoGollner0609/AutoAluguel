@@ -27,6 +27,10 @@ button {
   cursor: pointer;
 }
 
+input {
+  outline: none;
+}
+
 html,
 body {
   background-color: aliceblue;

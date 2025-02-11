@@ -2,10 +2,11 @@ import './styles.css'
 import { AutomobileDTO } from "../../models/automobile";
 
 type Props = {
-    automobile: AutomobileDTO
+    automobile: AutomobileDTO,
+    rentFunction: () => void
 }
 
-export default function AutomobileDetailsCard({ automobile }: Props) {
+export default function AutomobileDetailsCard({ automobile, rentFunction }: Props) {
     return (<div className="automobile-details-card">
         <div className="automobile-details-card-top">
             <img src={automobile.imgUrl} alt="" />
@@ -31,7 +32,7 @@ export default function AutomobileDetailsCard({ automobile }: Props) {
             </div>
             <div className="automobile-details-bottom-right">
                 <div className="automobile-details-btns">
-                    <button className="automobile-details-btn">
+                    <button className="automobile-details-btn" onClick={rentFunction}>
                         Alugar
                     </button>
                     <button className="automobile-details-btn">

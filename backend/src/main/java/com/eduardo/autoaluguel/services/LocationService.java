@@ -102,6 +102,5 @@ public class LocationService {
 
 		double totalValue = calculateTotalRentalValue(locationDTO);
 		location.setValue(totalValue);
-
 	}
 }

@@ -1,0 +1,59 @@
+.location-register-card-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.519);
+}
+
+.location-register-card {
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 100%;
+  max-width: 450px;
+  height: 250px;
+  border-radius: 4px;
+}
+
+.location-register-card h2 {
+  color: #127ed6;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.location-register-card-search {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-register-card-search input {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 2px solid #127ed6;
+  font-size: 16px;
+}
+
+.location-register-card-search button {
+  background-color: #127ed6;
+  color: #fff;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.location-register-card a {
+  color: #127ed6;
+  font-size: 14px;
+  text-align: center;
+}
+
+.location-register-card-invite-register-client {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
