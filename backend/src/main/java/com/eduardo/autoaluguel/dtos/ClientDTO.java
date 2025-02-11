@@ -3,12 +3,14 @@ package com.eduardo.autoaluguel.dtos;
 import java.time.LocalDate;
 
 import com.eduardo.autoaluguel.entities.Client;
+import com.eduardo.autoaluguel.services.validations.ClientValid;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
+@ClientValid
 public class ClientDTO {
 
 	private Long id;

@@ -39,16 +39,16 @@ export function ClientRegister() {
                 id: "address",
                 name: "address",
                 type: "text",
-                placeholder: "CEP",
+                placeholder: "Endereço",
                 validation: function (value: string) {
-                    return /^.{8,}$/.test(value);;
+                    return /^.{8,}$/.test(value);
                 },
                 message: "Campo requerido",
             },
-            birthDate: {
+            birthdate: {
                 value: "",
-                id: "birthDate",
-                name: "birthDate",
+                id: "birthdate",
+                name: "birthdate",
                 type: "date",
                 validation: function (value: string) {
                     return new Date(value).getTime() <= Date.now();
@@ -80,6 +80,10 @@ export function ClientRegister() {
         };
     }
 
+    function handleCardSucessCloseClick() {
+        setCardSucessVissible(false);
+    }
+
     function handleInputChange(event: any) {
         setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
     }
@@ -99,7 +103,7 @@ export function ClientRegister() {
         }
 
         const requestBody = forms.toValues(formData);
-
+        console.log(requestBody)
         clientService.insert(requestBody).then(() => {
             setCardSucessVissible(true);
         }).catch(error => {
@@ -132,12 +136,20 @@ export function ClientRegister() {
                         <div className="form-error">{formData.cpf.message}</div>
                     </div>
                     <div className="client-register-card-form-item-input form-item-input">
-                        <label>Data de Nascimento</label>
+                        <label>Endereço</label>
                         <FormInput
-                            {...formData.birthDate}
+                            {...formData.address}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.birthDate.message}</div>
+                        <div className="form-error">{formData.address.message}</div>
+                    </div>
+                    <div className="client-register-card-form-item-input form-item-input">
+                        <label>Data de Nascimento</label>
+                        <FormInput
+                            {...formData.birthdate}
+                            onTurnDirty={handleTurnDirty}
+                            onChange={handleInputChange} />
+                        <div className="form-error">{formData.birthdate.message}</div>
                     </div>
                     <div className="client-register-card-form-item-input form-item-input">
                         <label>Email</label>
@@ -156,12 +168,12 @@ export function ClientRegister() {
                         <div className="form-error">{formData.phone.message}</div>
                     </div>
                     <div className="client-register-card-btn">
-                        <button>Criar</button>
+                        <button onClick={handleSubmit}>Criar</button>
                     </div>
                 </form>
             </div>
             {
-                cardSucessVisible && <CardSucess message="Salvo" />
+                cardSucessVisible && <CardSucess message="Salvo" closeCard={handleCardSucessCloseClick} />
             }
         </section>
     );
