@@ -22,7 +22,7 @@ export default function AutomobileDetails() {
 
     function handleRentClick() {
         if (automobile?.returned === false) {
-            setErrorMessage("Automovel indisponivel para locação");
+            setErrorMessage("Automóvel indisponível para locação");
             return;
         }
         setRentCardVisible(true);

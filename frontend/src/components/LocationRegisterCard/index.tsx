@@ -85,6 +85,9 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
             <div className="location-register-card-background" onClick={rentCardVisible}>
             </div>
             <div className="location-register-card">
+                <div className="location-register-card-close">
+                    <button onClick={rentCardVisible}>X</button>
+                </div>
                 <h2>Alugar</h2>
                 {
                     !client ?
