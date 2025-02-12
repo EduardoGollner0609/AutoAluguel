@@ -29,7 +29,7 @@ public class LocationService {
 	// Create
 	public void insert(LocationDTO locationDTO) {
 		Location location = new Location();
-		copyDtoToEntity(location, locationDTO);
+		copyDtoToEntityToInsert(location, locationDTO);
 		repository.save(location);
 	}
 
@@ -48,10 +48,11 @@ public class LocationService {
 	}
 
 	// Update
+	@Transactional
 	public LocationDTO update(Long id, LocationDTO locationDTO) {
 		try {
 			Location location = repository.getReferenceById(id);
-			copyDtoToEntity(location, locationDTO);
+			copyDtoToEntityToUpdate(location, locationDTO);
 			return new LocationDTO(repository.save(location));
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Locação não encontrada");
@@ -83,12 +84,12 @@ public class LocationService {
 	}
 
 	// Calcular o valor total da locação
-	private double calculateTotalRentalValue(LocationDTO locationDTO) {
-		int days = calculateRentedDays(locationDTO.getRentalDate(), locationDTO.getReturnDate());
-		return days * locationDTO.getAutomobile().getValuePerDay();
+	private double calculateTotalRentalValue(Location location) {
+		int days = calculateRentedDays(location.getRentalDate(), location.getReturnDate());
+		return days * location.getAutomobile().getValuePerDay();
 	}
 
-	private void copyDtoToEntity(Location location, LocationDTO locationDTO) {
+	private void copyDtoToEntityToInsert(Location location, LocationDTO locationDTO) {
 		location.setRentalDate(Instant.now());
 
 		Automobile automobile = new Automobile();
@@ -99,10 +100,16 @@ public class LocationService {
 		client.setId(locationDTO.getClient().getId());
 		location.setClient(client);
 
-		if (locationDTO.getReturnDate() != null) {
-			double totalValue = calculateTotalRentalValue(locationDTO);
-			location.setValue(totalValue);
-		}
+	}
+
+	private void copyDtoToEntityToUpdate(Location location, LocationDTO locationDTO) {
+
+		location.setReturnDate(Instant.now());
+		location.getAutomobile().setReturned(true);
+
+		double totalValue = calculateTotalRentalValue(location);
+
+		location.setValue(totalValue);
 
 	}
 }

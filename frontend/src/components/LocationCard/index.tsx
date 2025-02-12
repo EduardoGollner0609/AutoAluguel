@@ -3,6 +3,8 @@ import checkLocationIcon from '../../assets/check-location-icon.svg';
 import { useState } from 'react';
 import { LocationDTO } from '../../models/location';
 import { format } from 'date-fns';
+import * as locationService from '../../services/location-service';
+import { CardSucess } from '../CardSucess';
 
 type Props = {
     location: LocationDTO
@@ -12,8 +14,15 @@ export default function LocationCard({ location }: Props) {
 
     const [chekedConfirm, setCheckedConfirm] = useState(false);
 
+    const [totalValue, setTotalValue] = useState<number>();
+
     function handleCheckedConfirmnClick() {
-        setCheckedConfirm(true);
+
+        locationService.update(location).then(response => {
+            setTotalValue(response.data.value)
+            setCheckedConfirm(true);
+        })
+
     }
 
     function formatDate(date: string) {
@@ -52,7 +61,10 @@ export default function LocationCard({ location }: Props) {
                         </div>
                 }
             </div>
-
+            {
+                totalValue && <CardSucess message="Devolvido" totalValue={totalValue} closeCard={() => setTotalValue(undefined)} />
+            }
         </div>
+
     );
 }

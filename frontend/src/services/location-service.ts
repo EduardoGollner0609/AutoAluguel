@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/system";
-import { LocationInsertDTO } from "../models/location";
+import { LocationDTO, LocationInsertDTO } from "../models/location";
 
 export function findAll(page: number, size = 5, sort = "returnDate") {
   return axios.get(
@@ -10,4 +10,8 @@ export function findAll(page: number, size = 5, sort = "returnDate") {
 
 export function insert(requestBody: LocationInsertDTO | undefined) {
   return axios.post(BASE_URL + "/locations", requestBody);
+}
+
+export function update(requestBody: LocationDTO) {
+  return axios.put(BASE_URL + `/locations/${requestBody.id}`, requestBody);
 }

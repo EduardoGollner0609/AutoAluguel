@@ -8,7 +8,6 @@ import { ClientDTO } from '../../models/client';
 import { AutomobileDTO } from '../../models/automobile';
 import { LocationInsertDTO } from '../../models/location';
 import * as locationService from '../../services/location-service';
-import { CardSucess } from '../CardSucess';
 
 type Props = {
     automobile: AutomobileDTO | undefined,
@@ -20,10 +19,6 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
     const [formData, setFormData] = useState(formEmpty);
 
     const [client, setClient] = useState<ClientDTO>();
-
-    const [location, setLocation] = useState<LocationInsertDTO>();
-
-    const [messageSucess, setMessageSucess] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -76,13 +71,9 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
             automobile: automobile,
             client: client,
         }
-        
-        console.log(newLocation)
-        setLocation(newLocation);
 
-        locationService.insert(location).then(() => {
+        locationService.insert(newLocation).then(() => {
             rentCardVisible();
-            setMessageSucess(true);
         });
     }
 
@@ -143,9 +134,6 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
                         </>
                 }
             </div>
-            {
-                messageSucess && <CardSucess closeCard={() => setMessageSucess(false)} message="Alugado" />
-            }
         </>
 
     );
