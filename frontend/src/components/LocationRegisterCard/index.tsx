@@ -11,10 +11,11 @@ import * as locationService from '../../services/location-service';
 
 type Props = {
     automobile: AutomobileDTO | undefined,
-    rentCardVisible: () => void
+    rentCardVisible: () => void,
+    locationRegisterSucess : () => void
 }
 
-export default function LocationRegisterCard({ automobile, rentCardVisible }: Props) {
+export default function LocationRegisterCard({ automobile, rentCardVisible, locationRegisterSucess }: Props) {
 
     const [formData, setFormData] = useState(formEmpty);
 
@@ -74,6 +75,7 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
 
         locationService.insert(newLocation).then(() => {
             rentCardVisible();
+            locationRegisterSucess();
         });
     }
 

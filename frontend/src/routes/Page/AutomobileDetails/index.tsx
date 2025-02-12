@@ -4,6 +4,7 @@ import * as automobileService from '../../../services/automobile-service';
 import { useParams } from 'react-router-dom';
 import AutomobileDetailsCard from '../../../components/AutomobileDetailsCard';
 import LocationRegisterCard from '../../../components/LocationRegisterCard';
+import { CardSucess } from '../../../components/CardSucess';
 
 export default function AutomobileDetails() {
 
@@ -11,6 +12,7 @@ export default function AutomobileDetails() {
 
     const [automobile, setAutomobile] = useState<AutomobileDTO>();
     const [rentCardVisible, setRentCardVisible] = useState<boolean>(false);
+    const [locationRegisterSucess, setLocationRegisterSucess] = useState<boolean>(false);
 
     useEffect(() => {
         automobileService.findById(Number(params.automobileId)).then(response => {
@@ -31,7 +33,10 @@ export default function AutomobileDetails() {
                 automobile && <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} />
             }
             {
-                rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile}/>
+                rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile} locationRegisterSucess={() => setLocationRegisterSucess(true)} />
+            }
+            {
+                locationRegisterSucess && <CardSucess message="Alugado" closeCard={() => setLocationRegisterSucess(false)} />
             }
         </section>
     );
