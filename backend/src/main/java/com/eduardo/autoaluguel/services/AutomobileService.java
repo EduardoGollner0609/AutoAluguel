@@ -12,6 +12,7 @@ import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
+import com.eduardo.autoaluguel.services.exceptions.RentalException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -74,6 +75,10 @@ public class AutomobileService {
 	public Automobile updateRentStatus(Long id, boolean returned) {
 		Automobile automobile = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Automóvel não encontrado"));
+
+		if (returned == false && automobile.getReturned() == false) {
+			throw new RentalException("O Automóvel está indisponivel para locação");
+		}
 		automobile.setReturned(returned);
 		return repository.save(automobile);
 	}

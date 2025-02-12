@@ -4,6 +4,7 @@ import * as automobileService from '../../../services/automobile-service';
 import { useParams } from 'react-router-dom';
 import AutomobileDetailsCard from '../../../components/AutomobileDetailsCard';
 import LocationRegisterCard from '../../../components/LocationRegisterCard';
+import { CardError } from '../../../components/CardError';
 
 export default function AutomobileDetails() {
 
@@ -11,6 +12,7 @@ export default function AutomobileDetails() {
 
     const [automobile, setAutomobile] = useState<AutomobileDTO>();
     const [rentCardVisible, setRentCardVisible] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     useEffect(() => {
         automobileService.findById(Number(params.automobileId)).then(response => {
@@ -19,6 +21,10 @@ export default function AutomobileDetails() {
     }, []);
 
     function handleRentClick() {
+        if (automobile?.returned === false) {
+            setErrorMessage("Automovel indisponivel para locação");
+            return;
+        }
         setRentCardVisible(true);
     }
 
@@ -32,6 +38,9 @@ export default function AutomobileDetails() {
             }
             {
                 rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile} />
+            }
+            {
+                errorMessage && <CardError message={errorMessage} closeCard={() => setErrorMessage("")} />
             }
         </section>
     );
