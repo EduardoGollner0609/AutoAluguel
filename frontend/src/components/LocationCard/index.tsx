@@ -12,7 +12,7 @@ type Props = {
 
 export default function LocationCard({ location }: Props) {
 
-    const [chekedConfirm, setCheckedConfirm] = useState(false);
+    const [chekedConfirm, setCheckedConfirm] = useState(location.returnDate ? true : false);
 
     const [totalValue, setTotalValue] = useState<number>();
 
