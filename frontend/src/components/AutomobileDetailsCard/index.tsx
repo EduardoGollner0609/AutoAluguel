@@ -21,12 +21,12 @@ export default function AutomobileDetailsCard({ automobile, rentFunction }: Prop
                 <p>Valor por dia: R${automobile.valuePerDay.toFixed(2)}</p>
                 {
                     automobile.returned ?
-                        <p className="automobile-details-returned-true">
+                        <p className="automobile-returned-true">
                             Disponivel
                         </p>
                         :
-                        <p className="automobile-details-returned-false">
-                            indisponivel
+                        <p className="automobile-returned-false">
+                            Indisponivel
                         </p>
                 }
             </div>

@@ -2,6 +2,7 @@ package com.eduardo.autoaluguel.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.autoaluguel.dtos.ClientDTO;
 import com.eduardo.autoaluguel.entities.Client;
@@ -15,6 +16,7 @@ public class ClientService {
 	private ClientRepository repository;
 
 	// Create
+	@Transactional
 	public ClientDTO insert(ClientDTO clientDTO) {
 		Client client = new Client();
 		copyDtoToEntity(client, clientDTO);
@@ -22,6 +24,7 @@ public class ClientService {
 	}
 
 	// Read (FindByCpf)
+	@Transactional(readOnly = true)
 	public ClientDTO findByCpf(String cpf) {
 		Client client = repository.findByCpf(cpf)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));

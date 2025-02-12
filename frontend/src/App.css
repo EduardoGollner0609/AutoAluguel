@@ -84,3 +84,12 @@ main {
   padding: 5px 10px;
   color: #b11717;
 }
+
+.automobile-returned-true {
+  color: #04750a;
+  font-weight: 500;
+}
+
+.automobile-returned-false {
+  color: #a10803;
+}

@@ -30,6 +30,7 @@ public class LocationService {
 	private AutomobileService automobileService;
 
 	// Create
+	@Transactional
 	public void insert(LocationDTO locationDTO) {
 		Location location = new Location();
 		copyDtoToEntityToInsert(location, locationDTO);
@@ -44,6 +45,7 @@ public class LocationService {
 	}
 
 	// Read(FindById)
+	@Transactional(readOnly = true)
 	public LocationDTO findById(Long id) {
 		Location location = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Locação não encontrada"));
@@ -63,6 +65,7 @@ public class LocationService {
 	}
 
 	// Delete
+	@Transactional
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
 			throw new ResourceNotFoundException("Locação não encontrada");

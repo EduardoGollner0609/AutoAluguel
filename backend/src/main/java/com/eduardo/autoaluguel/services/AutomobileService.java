@@ -23,6 +23,7 @@ public class AutomobileService {
 	private AutomobileRepository repository;
 
 	// Create
+	@Transactional
 	public AutomobileDTO insert(AutomobileDTO automobileDTO) {
 		Automobile automobile = new Automobile();
 		copyDtoToEntity(automobile, automobileDTO);
@@ -57,6 +58,7 @@ public class AutomobileService {
 	}
 
 	// Delete
+	@Transactional
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
 			throw new ResourceNotFoundException("Automóvel não encontrado");

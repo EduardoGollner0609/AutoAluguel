@@ -49,15 +49,6 @@
   font-size: 16px;
 }
 
-.automobile-details-returned-true {
-  color: #04750a;
-  font-weight: 500;
-}
-
-.automobile-details-returned-false {
-  color: #a10803;
-}
-
 @media (max-width: 576px) {
   .automobile-details-card-top img {
     width: 75%;

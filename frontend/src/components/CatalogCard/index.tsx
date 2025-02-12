@@ -22,9 +22,9 @@ export default function CatalogCard({ automobile }: Props) {
                         <p>KM: {automobile.km}</p>
                         <p>Valor: R$ {automobile.valuePerDay.toFixed(2)}</p>
                         {
-                            automobile.returned ? <p>Disponivel</p>
+                            automobile.returned ? <p className="automobile-returned-true">Disponivel</p>
                                 :
-                                <p>indisponivel</p>
+                                <p className="automobile-returned-false">Indisponivel</p>
                         }
                     </div>
                 </div>
