@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import FormInput from '../FormInput';
 import { useState } from 'react';
@@ -11,11 +11,12 @@ import * as locationService from '../../services/location-service';
 
 type Props = {
     automobile: AutomobileDTO | undefined,
-    rentCardVisible: () => void,
-    locationRegisterSucess : () => void
+    rentCardVisible: () => void
 }
 
-export default function LocationRegisterCard({ automobile, rentCardVisible, locationRegisterSucess }: Props) {
+export default function LocationRegisterCard({ automobile, rentCardVisible }: Props) {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState(formEmpty);
 
@@ -75,7 +76,7 @@ export default function LocationRegisterCard({ automobile, rentCardVisible, loca
 
         locationService.insert(newLocation).then(() => {
             rentCardVisible();
-            locationRegisterSucess();
+            navigate("/");
         });
     }
 

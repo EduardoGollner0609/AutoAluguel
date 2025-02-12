@@ -26,6 +26,9 @@ public class LocationService {
 	@Autowired
 	private LocationRepository repository;
 
+	@Autowired
+	private AutomobileService automobileService;
+
 	// Create
 	public void insert(LocationDTO locationDTO) {
 		Location location = new Location();
@@ -92,8 +95,8 @@ public class LocationService {
 	private void copyDtoToEntityToInsert(Location location, LocationDTO locationDTO) {
 		location.setRentalDate(Instant.now());
 
-		Automobile automobile = new Automobile();
-		automobile.setId(locationDTO.getAutomobile().getId());
+		Automobile automobile = automobileService.updateRentStatus(locationDTO.getAutomobile().getId(), false);
+
 		location.setAutomobile(automobile);
 
 		Client client = new Client();
@@ -105,7 +108,8 @@ public class LocationService {
 	private void copyDtoToEntityToUpdate(Location location, LocationDTO locationDTO) {
 
 		location.setReturnDate(Instant.now());
-		location.getAutomobile().setReturned(true);
+
+		automobileService.updateRentStatus(locationDTO.getAutomobile().getId(), true);
 
 		double totalValue = calculateTotalRentalValue(location);
 

@@ -7,21 +7,24 @@ import * as locationService from '../../services/location-service';
 import { CardSucess } from '../CardSucess';
 
 type Props = {
-    location: LocationDTO
+    locationProps: LocationDTO
 }
 
-export default function LocationCard({ location }: Props) {
+export default function LocationCard({ locationProps }: Props) {
+
+    const [location, setLocation] = useState<LocationDTO>(locationProps);
 
     const [chekedConfirm, setCheckedConfirm] = useState(location.returnDate ? true : false);
 
-    const [totalValue, setTotalValue] = useState<number>();
+    const [cardDevolutionSucessVisible, setCardDevolutionSucessVisible] = useState<boolean>(false);
 
     function handleCheckedConfirmnClick() {
 
         locationService.update(location).then(response => {
-            setTotalValue(response.data.value)
             setCheckedConfirm(true);
-        })
+            setLocation(response.data);
+            setCardDevolutionSucessVisible(true);
+        });
 
     }
 
@@ -55,6 +58,7 @@ export default function LocationCard({ location }: Props) {
                             <p>Devolver</p>
                         </div>
                         :
+
                         <div className="location-checked-confirm-box">
                             <img src={checkLocationIcon} alt="" />
                             <p>Devolvido</p>
@@ -62,7 +66,7 @@ export default function LocationCard({ location }: Props) {
                 }
             </div>
             {
-                totalValue && <CardSucess message="Devolvido" totalValue={totalValue} closeCard={() => setTotalValue(undefined)} />
+                cardDevolutionSucessVisible && <CardSucess message="Devolvido" totalValue={location.value} closeCard={() => setCardDevolutionSucessVisible(false)} />
             }
         </div>
 

@@ -45,6 +45,7 @@ public class AutomobileService {
 	}
 
 	// Update
+	@Transactional
 	public AutomobileDTO update(Long id, AutomobileDTO automobileDTO) {
 		try {
 			Automobile automobile = repository.getReferenceById(id);
@@ -65,6 +66,14 @@ public class AutomobileService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Não é possivel apagar esse veiculo");
 		}
+	}
+
+	@Transactional
+	public Automobile updateRentStatus(Long id, boolean returned) {
+		Automobile automobile = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Automóvel não encontrado"));
+		automobile.setReturned(returned);
+		return repository.save(automobile);
 	}
 
 	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO) {

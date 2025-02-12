@@ -32,7 +32,7 @@ export default function HistoryPage() {
             </div>
             <div className="history-page-location-cards">
                 {
-                    locations.map(location => (<LocationCard key={location.id} location={location} />))
+                    locations.map(location => (<LocationCard key={location.id} locationProps={location}/>))
                 }
             </div>
             {
