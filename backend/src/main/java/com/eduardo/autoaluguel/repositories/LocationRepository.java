@@ -11,6 +11,6 @@ import com.eduardo.autoaluguel.entities.Location;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-	@Query(value = "SELECT l FROM Location l JOIN FETCH l.client JOIN FETCH l.automobile a JOIN FETCH a.model m JOIN FETCH m.brand", countQuery = "SELECT COUNT(l) FROM Location l")
+	@Query(value = "SELECT l FROM Location l JOIN FETCH l.client JOIN FETCH l.automobile a JOIN FETCH a.model m JOIN FETCH m.brand ORDER BY l.rentalDate DESC", countQuery = "SELECT COUNT(l) FROM Location l")
 	Page<Location> findAllPaged(Pageable pageable);
 }
