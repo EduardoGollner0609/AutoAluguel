@@ -113,7 +113,7 @@ main {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  &.register-card-form-item-input:nth-child(6) {
+  &.client-register:nth-child(6) {
     margin-bottom: 20px;
   }
 }

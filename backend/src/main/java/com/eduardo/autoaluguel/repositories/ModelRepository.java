@@ -8,4 +8,5 @@ import com.eduardo.autoaluguel.entities.Model;
 @Repository
 public interface ModelRepository extends JpaRepository<Model, Long> {
 
+	boolean existsByName(String name);
 }

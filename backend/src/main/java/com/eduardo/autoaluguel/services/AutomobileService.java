@@ -11,6 +11,7 @@ import com.eduardo.autoaluguel.dtos.AutomobileDTO;
 import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
+import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
@@ -23,11 +24,14 @@ public class AutomobileService {
 	@Autowired
 	private AutomobileRepository repository;
 
+	@Autowired
+	private ModelRepository modelRepository;
+
 	// Create
 	@Transactional
 	public AutomobileDTO insert(AutomobileDTO automobileDTO) {
 		Automobile automobile = new Automobile();
-		copyDtoToEntity(automobile, automobileDTO);
+		copyDtoToEntity(automobile, automobileDTO, true);
 		return new AutomobileDTO(repository.save(automobile));
 	}
 
@@ -51,7 +55,7 @@ public class AutomobileService {
 	public AutomobileDTO update(Long id, AutomobileDTO automobileDTO) {
 		try {
 			Automobile automobile = repository.getReferenceById(id);
-			copyDtoToEntity(automobile, automobileDTO);
+			copyDtoToEntity(automobile, automobileDTO, false);
 			return new AutomobileDTO(repository.save(automobile));
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Automóvel não encontrado");
@@ -83,7 +87,7 @@ public class AutomobileService {
 		return repository.save(automobile);
 	}
 
-	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO) {
+	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO, boolean isInsert) {
 		automobile.setImgUrl(automobileDTO.getImgUrl());
 		automobile.setPlate(automobileDTO.getPlate());
 		automobile.setColor(automobileDTO.getColor());
@@ -93,6 +97,14 @@ public class AutomobileService {
 		automobile.setReturned(automobileDTO.getReturned());
 
 		Model model = new Model();
+
+		if (isInsert == true && !modelRepository.existsByName(automobileDTO.getModel().getName())) {
+			model.setName(automobileDTO.getModel().getName());
+			model.getBrand().setId(automobileDTO.getModel().getBrand().getId());
+			modelRepository.save(model);
+			return;
+		}
+
 		model.setId(automobileDTO.getModel().getId());
 		automobile.setModel(model);
 	}

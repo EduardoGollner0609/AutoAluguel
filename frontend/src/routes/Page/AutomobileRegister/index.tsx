@@ -3,11 +3,15 @@ import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
 import { CardSucess } from '../../../components/CardSucess';
+import { BrandDTO } from '../../../models/automobile';
 
 export function AutomobileRegister() {
 
     const [formData, setFormData] = useState(formEmpty);
+
     const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
+
+    const [brands, setBrands] = useState<BrandDTO[]>([]);
 
     function formEmpty() {
         return {
@@ -76,6 +80,27 @@ export function AutomobileRegister() {
                     return /^\d+$/.test(value);
                 },
                 message: "Campo requerido",
+            },
+            model: {
+                value: "",
+                id: "model",
+                name: "model",
+                type: "text",
+                placeholder: "Modelo",
+                validation: function (value: string) {
+                    return /^.{2,}$/.test(value);
+                },
+                message: "Campo requerido",
+            },
+            brand: {
+                value: "",
+                id: "brand",
+                name: "brand",
+                placeholder: "Marca",
+                validation: function (value: BrandDTO) {
+                    return value != null;
+                },
+                message: "Escolha ao menos uma categoria",
             },
         };
     }
@@ -161,6 +186,14 @@ export function AutomobileRegister() {
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.color.message}</div>
+                    </div>
+                    <div className="register-card-form-item-input form-item-input">
+                        <label>Modelo</label>
+                        <FormInput
+                            {...formData.model}
+                            onTurnDirty={handleTurnDirty}
+                            onChange={handleInputChange} />
+                        <div className="form-error">{formData.model.message}</div>
                     </div>
                     <div className="register-card-btn">
                         <button onClick={handleSubmit}>Criar</button>

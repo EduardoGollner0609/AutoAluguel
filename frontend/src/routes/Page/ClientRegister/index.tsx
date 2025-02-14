@@ -119,7 +119,7 @@ export function ClientRegister() {
             <div className="page-register-card">
                 <h2>Criar usuario</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>Nome</label>
                         <FormInput
                             {...formData.name}
@@ -127,7 +127,7 @@ export function ClientRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.name.message}</div>
                     </div>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>CPF</label>
                         <FormInput
                             {...formData.cpf}
@@ -135,7 +135,7 @@ export function ClientRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.cpf.message}</div>
                     </div>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>Endereço</label>
                         <FormInput
                             {...formData.address}
@@ -143,7 +143,7 @@ export function ClientRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.address.message}</div>
                     </div>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>Data de Nascimento</label>
                         <FormInput
                             {...formData.birthdate}
@@ -151,7 +151,7 @@ export function ClientRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.birthdate.message}</div>
                     </div>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>Email</label>
                         <FormInput
                             {...formData.email}
@@ -159,7 +159,7 @@ export function ClientRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.email.message}</div>
                     </div>
-                    <div className="register-card-form-item-input form-item-input">
+                    <div className="register-card-form-item-input form-item-input client-register">
                         <label>Número de telefone</label>
                         <FormInput
                             {...formData.phone}
