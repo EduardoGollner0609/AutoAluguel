@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { AutomobileDTO } from '../../../models/automobile';
 import * as automobileService from '../../../services/automobile-service';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AutomobileDetailsCard from '../../../components/AutomobileDetailsCard';
 import LocationRegisterCard from '../../../components/LocationRegisterCard';
 import { CardError } from '../../../components/CardError';
 
 export default function AutomobileDetails() {
+
+    const navigate = useNavigate();
 
     const params = useParams();
 
@@ -31,10 +33,17 @@ export default function AutomobileDetails() {
     function handleRentCloseClick() {
         setRentCardVisible(false);
     }
+
+    function handleDeleteClick(id: number) {
+        automobileService.deleteById(id).then(() => {
+            navigate("/");
+        })
+    }
+
     return (
         <section id="automobile-details-section" className="container">
             {
-                automobile && <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} />
+                automobile && <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} deleteFunction={handleDeleteClick} />
             }
             {
                 rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile} />

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
@@ -12,6 +13,8 @@ import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Brand;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
+import com.eduardo.autoaluguel.repositories.LocationRepository;
+import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
@@ -25,7 +28,10 @@ public class AutomobileService {
 	private AutomobileRepository repository;
 
 	@Autowired
-	private ModelService modelService;
+	private ModelRepository modelRepository;
+
+	@Autowired
+	private LocationRepository locationRepository;
 
 	// Create
 	@Transactional
@@ -63,12 +69,13 @@ public class AutomobileService {
 	}
 
 	// Delete
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {
 		if (!repository.existsById(id)) {
 			throw new ResourceNotFoundException("Automóvel não encontrado");
 		}
 		try {
+			locationRepository.deleteAllByAutomobileId(id);
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Não é possivel apagar esse veiculo");
@@ -104,7 +111,7 @@ public class AutomobileService {
 			brand.setId(automobileDTO.getModel().getBrand().getId());
 			model.setBrand(brand);
 			model.setName(automobileDTO.getModel().getName());
-			model = modelService.insert(model);
+			model = modelRepository.save(model);
 			automobile.setModel(model);
 			return;
 		}

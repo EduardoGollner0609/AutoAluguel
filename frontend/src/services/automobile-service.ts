@@ -13,3 +13,7 @@ export function findById(id: number) {
 export function insert(requestBody: AutomobileDTO) {
   return axios.post(BASE_URL + "/automobiles", requestBody);
 }
+
+export function deleteById(id: number) {
+  return axios.delete(BASE_URL + `/automobiles/${id}`);
+}

@@ -76,7 +76,7 @@ public class LocationService {
 			throw new DatabaseException("Não é possível apagar essa locação");
 		}
 	}
-
+	
 	// Calcular os dias de locação
 	private int calculateRentedDays(Instant rentalDate, Instant returnDate) {
 		long segundos = Duration.between(rentalDate, returnDate).getSeconds();

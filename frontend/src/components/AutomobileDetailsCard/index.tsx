@@ -3,10 +3,12 @@ import { AutomobileDTO } from "../../models/automobile";
 
 type Props = {
     automobile: AutomobileDTO,
-    rentFunction: () => void
+    rentFunction: () => void,
+    deleteFunction: (id: number) => void
 }
 
-export default function AutomobileDetailsCard({ automobile, rentFunction }: Props) {
+export default function AutomobileDetailsCard({ automobile, rentFunction, deleteFunction }: Props) {
+
     return (<div className="automobile-details-card">
         <div className="automobile-details-card-top">
             <img src={automobile.imgUrl} alt="" />
@@ -35,10 +37,7 @@ export default function AutomobileDetailsCard({ automobile, rentFunction }: Prop
                     <button className="automobile-details-btn" onClick={rentFunction}>
                         Alugar
                     </button>
-                    <button className="automobile-details-btn">
-                        Editar
-                    </button>
-                    <button className="automobile-details-btn">
+                    <button className="automobile-details-btn" onClick={() => deleteFunction(automobile.id)}>
                         Excluir
                     </button>
                 </div>

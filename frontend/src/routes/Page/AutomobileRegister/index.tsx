@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
-import { CardSucess } from '../../../components/CardSucess';
 import { BrandDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
@@ -15,8 +14,6 @@ export function AutomobileRegister() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState(formEmpty());
-
-    const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
 
     const [brands, setBrands] = useState<BrandDTO[]>([]);
 
@@ -107,10 +104,6 @@ export function AutomobileRegister() {
             setBrands(response.data)
         )
     }, []);
-
-    function handleCardSucessCloseClick() {
-        setCardSucessVissible(false);
-    }
 
     function handleInputChange(event: any) {
         const { name, value } = event.target;
@@ -288,9 +281,6 @@ export function AutomobileRegister() {
                     </div>
                 </form>
             </div>
-            {
-                cardSucessVisible && <CardSucess message="Salvo" closeCard={handleCardSucessCloseClick} />
-            }
         </section>
     );
 }
