@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
 import { CardSucess } from '../../../components/CardSucess';
 import { BrandDTO } from '../../../models/automobile';
+import * as brandService from '../../../services/brand-service';
+import FormSelect from '../../../components/FormSelect';
+import { selectStyles } from '../../../utils/select';
 
 export function AutomobileRegister() {
 
@@ -105,6 +108,12 @@ export function AutomobileRegister() {
         };
     }
 
+    useEffect(() => {
+        brandService.findAll().then(response =>
+            setBrands(response.data)
+        );
+    })
+
     function handleCardSucessCloseClick() {
         setCardSucessVissible(false);
     }
@@ -195,6 +204,30 @@ export function AutomobileRegister() {
                             onChange={handleInputChange} />
                         <div className="form-error">{formData.model.message}</div>
                     </div>
+                    <div className="register-card-select-brand">
+                        <label>Marca</label>
+                        <FormSelect
+                            {...formData.brand}
+                            className="dsc-form-control dsc-form-select-container"
+                            styles={selectStyles}
+                            options={brands}
+                            onChange={(obj: any) => {
+                                const newFormData = forms.updateAndValidate(
+                                    formData,
+                                    "brand",
+                                    obj
+                                );
+                                setFormData(newFormData);
+                            }}
+                            onTurnDirty={handleTurnDirty}
+                            getOptionLabel={(obj: any) => obj.name}
+                            getOptionValue={(obj: any) => String(obj.id)}
+                        />
+                        <div className="form-error">
+                            {formData.brand.message}
+                        </div>
+                    </div>
+
                     <div className="register-card-btn">
                         <button onClick={handleSubmit}>Criar</button>
                     </div>
