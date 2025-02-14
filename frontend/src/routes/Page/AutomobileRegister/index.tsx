@@ -5,10 +5,14 @@ import FormInput from '../../../components/FormInput';
 import { CardSucess } from '../../../components/CardSucess';
 import { BrandDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
+import * as automobileService from '../../../services/automobile-service';
 import FormSelect from '../../../components/FormSelect';
 import { selectStyles } from '../../../utils/select';
+import { useNavigate } from 'react-router-dom';
 
 export function AutomobileRegister() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState(formEmpty);
 
@@ -27,7 +31,7 @@ export function AutomobileRegister() {
                 validation: function (value: string) {
                     return /^.{10,}$/.test(value);
                 },
-                message: "Campo requerido",
+                message: "Minimo de 10 caracteres",
             },
             plate: {
                 value: "",
@@ -138,7 +142,16 @@ export function AutomobileRegister() {
 
         const requestBody = forms.toValues(formData);
 
-
+        automobileService.insert(requestBody).then(() => {
+            navigate("/")
+        }
+        ).catch(error => {
+            const newInputs = forms.setBackendErrors(
+                formData,
+                error.response.data.errors
+            );
+            setFormData(newInputs);
+        })
 
         setFormData(formEmpty);
     }

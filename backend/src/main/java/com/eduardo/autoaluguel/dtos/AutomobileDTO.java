@@ -2,14 +2,24 @@ package com.eduardo.autoaluguel.dtos;
 
 import com.eduardo.autoaluguel.entities.Automobile;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class AutomobileDTO {
 
 	private Long id;
+	@NotBlank(message = "Campo requerido")
+	@Size(min = 10, message = "Minimo de 10 caracteres")
 	private String imgUrl;
+	@NotBlank(message = "Campo requerido")
 	private String plate;
+	@NotBlank(message = "Campo requerido")
 	private Integer year;
+	@NotBlank(message = "Campo requerido")
 	private String color;
+	@NotBlank(message = "Campo requerido")
 	private Long km;
+	@NotBlank(message = "Campo requerido")
 	private Double valuePerDay;
 	private Boolean returned;
 	private ModelDTO model;
