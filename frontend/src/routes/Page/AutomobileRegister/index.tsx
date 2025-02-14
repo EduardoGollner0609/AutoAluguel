@@ -14,7 +14,7 @@ export function AutomobileRegister() {
 
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState(formEmpty);
+    const [formData, setFormData] = useState(formEmpty());
 
     const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
 
@@ -89,25 +89,15 @@ export function AutomobileRegister() {
                 message: "Campo requerido",
             },
             model: {
-                value: "",
+                value: { name: "", brand: { name: "" } },
                 id: "model",
                 name: "model",
-                type: "text",
                 placeholder: "Modelo",
-                validation: function (value: string) {
-                    return /^.{2,}$/.test(value);
+                type: "text",
+                validation: function (value: { name: string, brand: { name: string } }) {
+                    return value.name.trim() !== "" && value.brand.name.trim() !== "";
                 },
-                message: "Campo requerido",
-            },
-            brand: {
-                value: "",
-                id: "brand",
-                name: "brand",
-                placeholder: "Marca",
-                validation: function (value: BrandDTO) {
-                    return value != null;
-                },
-                message: "Escolha ao menos uma categoria",
+                message: "Marca e Modelo são obrigatórios",
             },
         };
     }
@@ -115,15 +105,46 @@ export function AutomobileRegister() {
     useEffect(() => {
         brandService.findAll().then(response =>
             setBrands(response.data)
-        );
-    })
+        )
+    }, []);
 
     function handleCardSucessCloseClick() {
         setCardSucessVissible(false);
     }
 
     function handleInputChange(event: any) {
-        setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
+        const { name, value } = event.target;
+
+        setFormData((prev) => {
+            if (name === "model") {
+                return {
+                    ...prev,
+                    model: {
+                        ...prev.model,
+                        value: {
+                            ...prev.model.value,
+                            name: value,
+                        },
+                    },
+                };
+            } else if (name === "brand") {
+                return {
+                    ...prev,
+                    model: {
+                        ...prev.model,
+                        value: {
+                            ...prev.model.value,
+                            brand: {
+                                ...prev.model.value.brand,
+                                name: value,
+                            },
+                        },
+                    },
+                };
+            }
+
+            return forms.updateAndValidate(prev, name, value);
+        });
     }
 
     function handleTurnDirty(name: string) {
@@ -142,6 +163,9 @@ export function AutomobileRegister() {
 
         const requestBody = forms.toValues(formData);
 
+        console.log(requestBody);
+
+
         automobileService.insert(requestBody).then(() => {
             navigate("/")
         }
@@ -150,10 +174,11 @@ export function AutomobileRegister() {
                 formData,
                 error.response.data.errors
             );
+            console.log(newInputs);
             setFormData(newInputs);
         })
 
-        setFormData(formEmpty);
+
     }
 
     return (
@@ -213,31 +238,48 @@ export function AutomobileRegister() {
                         <label>Modelo</label>
                         <FormInput
                             {...formData.model}
+                            value={formData.model.value.name}
                             onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
+                            onChange={
+                                (e: any) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        model: {
+                                            ...prev.model,
+                                            value: {
+                                                ...prev.model.value,
+                                                name: e.target.value,
+                                            },
+                                        },
+                                    }))
+                            } />
                         <div className="form-error">{formData.model.message}</div>
                     </div>
                     <div className="register-card-select-brand">
                         <label>Marca</label>
                         <FormSelect
-                            {...formData.brand}
-                            className="dsc-form-control dsc-form-select-container"
+                            {...formData.model}
+                            value={brands.find((b) => b.name === formData.model.value?.brand?.name) || ""}
                             styles={selectStyles}
                             options={brands}
-                            onChange={(obj: any) => {
-                                const newFormData = forms.updateAndValidate(
-                                    formData,
-                                    "brand",
-                                    obj
-                                );
-                                setFormData(newFormData);
-                            }}
+                            onChange={(selectedBrand: BrandDTO) =>
+                                setFormData((prev) => ({
+                                    ...prev,
+                                    model: {
+                                        ...prev.model,
+                                        value: {
+                                            ...prev.model.value,
+                                            brand: selectedBrand,
+                                        },
+                                    },
+                                }))
+                            }
                             onTurnDirty={handleTurnDirty}
                             getOptionLabel={(obj: any) => obj.name}
                             getOptionValue={(obj: any) => String(obj.id)}
                         />
                         <div className="form-error">
-                            {formData.brand.message}
+                            {formData.model.message}
                         </div>
                     </div>
 

@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
 import com.eduardo.autoaluguel.entities.Automobile;
+import com.eduardo.autoaluguel.entities.Brand;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
-import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
@@ -25,7 +25,7 @@ public class AutomobileService {
 	private AutomobileRepository repository;
 
 	@Autowired
-	private ModelRepository modelRepository;
+	private ModelService modelService;
 
 	// Create
 	@Transactional
@@ -98,10 +98,14 @@ public class AutomobileService {
 
 		Model model = new Model();
 
-		if (isInsert == true && !modelRepository.existsByName(automobileDTO.getModel().getName())) {
+		if (isInsert == true) {
+			automobile.setReturned(true);
+			Brand brand = new Brand();
+			brand.setId(automobileDTO.getModel().getBrand().getId());
+			model.setBrand(brand);
 			model.setName(automobileDTO.getModel().getName());
-			model.getBrand().setId(automobileDTO.getModel().getBrand().getId());
-			modelRepository.save(model);
+			model = modelService.insert(model);
+			automobile.setModel(model);
 			return;
 		}
 
