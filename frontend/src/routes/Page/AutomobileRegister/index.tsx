@@ -2,80 +2,80 @@ import { useState } from 'react';
 import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
-import * as clientService from '../../../services/client-service';
 import { CardSucess } from '../../../components/CardSucess';
 
-export function ClientRegister() {
+export function AutomobileRegister() {
 
     const [formData, setFormData] = useState(formEmpty);
     const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
 
     function formEmpty() {
         return {
-            name: {
+            imgUrl: {
                 value: "",
-                id: "name",
-                name: "name",
+                id: "imgUrl",
+                name: "imgUrl",
                 type: "text",
-                placeholder: "Nome",
+                placeholder: "URL da Imagem",
                 validation: function (value: string) {
-                    return /^.{5,50}$/.test(value);
-                },
-                message: "Favor informar um nome de 5 a 80 caracteres",
-            },
-            phone: {
-                value: "",
-                id: "phone",
-                name: "phone",
-                type: "text",
-                placeholder: "Número",
-                validation: function (value: string) {
-                    return /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/.test(value);
-                },
-                message: "Número inválido",
-            },
-            address: {
-                value: "",
-                id: "address",
-                name: "address",
-                type: "text",
-                placeholder: "Endereço",
-                validation: function (value: string) {
-                    return /^.{8,}$/.test(value);
+                    return /^.{10,}$/.test(value);
                 },
                 message: "Campo requerido",
             },
-            birthdate: {
+            plate: {
                 value: "",
-                id: "birthdate",
-                name: "birthdate",
-                type: "date",
+                id: "plate",
+                name: "plate",
+                type: "text",
+                placeholder: "Placa",
                 validation: function (value: string) {
-                    return new Date(value).getTime() <= Date.now();
+                    return /^[A-Z]{3}-?\d[A-Z0-9]\d{2}$/.test(value);
+                },
+                message: "Placa inválida",
+            },
+            year: {
+                value: "",
+                id: "year",
+                name: "year",
+                type: "number",
+                placeholder: "Ano",
+                validation: function (value: string) {
+                    return /^(19[5-9]\d|20[0-3]\d|2040)$/.test(value);
                 },
                 message: "Data inválida",
             },
-            email: {
+            color: {
                 value: "",
-                id: "email",
-                name: "email",
+                id: "color",
+                name: "color",
                 type: "text",
-                placeholder: "Email",
+                placeholder: "Cor",
                 validation: function (value: string) {
-                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                    return /^.{3,}$/.test(value);
                 },
-                message: "Email inválido",
+                message: "Campo requerido",
             },
-            cpf: {
+            km: {
                 value: "",
-                id: "cpf",
-                name: "cpf",
-                type: "text",
-                placeholder: "CPF",
+                id: "km",
+                name: "km",
+                type: "number",
+                placeholder: "Kilometragem",
                 validation: function (value: string) {
-                    return /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(value);
+                    return /^\d+$/.test(value);
                 },
-                message: "CPF inválido",
+                message: "Campo requerido",
+            },
+            valuePerDay: {
+                value: "",
+                id: "valuePerDay",
+                name: "valuePerDay",
+                type: "number",
+                placeholder: "Valor por dia",
+                validation: function (value: string) {
+                    return /^\d+$/.test(value);
+                },
+                message: "Campo requerido",
             },
         };
     }
@@ -104,68 +104,63 @@ export function ClientRegister() {
 
         const requestBody = forms.toValues(formData);
 
-        clientService.insert(requestBody).then(() => {
-            setCardSucessVissible(true);
-        }).catch(error => {
-            const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
-            setFormData(newInputs);
-        });
+
 
         setFormData(formEmpty);
     }
 
     return (
-        <section id="client-section" className="container">
+        <section id="automobile-section" className="container">
             <div className="page-register-card">
-                <h2>Criar usuario</h2>
+                <h2>Criar Automobile</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>Nome</label>
+                        <label>URL da Imagem</label>
                         <FormInput
-                            {...formData.name}
+                            {...formData.imgUrl}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.name.message}</div>
+                        <div className="form-error">{formData.imgUrl.message}</div>
                     </div>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>CPF</label>
+                        <label>Placa</label>
                         <FormInput
-                            {...formData.cpf}
+                            {...formData.plate}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.cpf.message}</div>
+                        <div className="form-error">{formData.plate.message}</div>
                     </div>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>Endereço</label>
+                        <label>Ano</label>
                         <FormInput
-                            {...formData.address}
+                            {...formData.year}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.address.message}</div>
+                        <div className="form-error">{formData.year.message}</div>
                     </div>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>Data de Nascimento</label>
+                        <label>Kilometragem</label>
                         <FormInput
-                            {...formData.birthdate}
+                            {...formData.km}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.birthdate.message}</div>
+                        <div className="form-error">{formData.km.message}</div>
                     </div>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>Email</label>
+                        <label>Valor por dia</label>
                         <FormInput
-                            {...formData.email}
+                            {...formData.valuePerDay}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.email.message}</div>
+                        <div className="form-error">{formData.valuePerDay.message}</div>
                     </div>
                     <div className="register-card-form-item-input form-item-input">
-                        <label>Número de telefone</label>
+                        <label>Cor</label>
                         <FormInput
-                            {...formData.phone}
+                            {...formData.color}
                             onTurnDirty={handleTurnDirty}
                             onChange={handleInputChange} />
-                        <div className="form-error">{formData.phone.message}</div>
+                        <div className="form-error">{formData.color.message}</div>
                     </div>
                     <div className="register-card-btn">
                         <button onClick={handleSubmit}>Criar</button>

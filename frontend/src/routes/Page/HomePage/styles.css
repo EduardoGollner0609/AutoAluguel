@@ -1,3 +1,15 @@
+.home-page-welcome {
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-page-welcome a {
+  padding: 6px 20px;
+  background-color: #127ed6;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 10px;
+}
 
 .home-page-catalog-cards {
   display: grid;

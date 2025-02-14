@@ -3,6 +3,7 @@ import CatalogCard from '../../../components/CatalogCard';
 import './styles.css';
 import { AutomobileDTO } from '../../../models/automobile';
 import * as automobileService from '../../../services/automobile-service';
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
 
@@ -19,7 +20,7 @@ export default function HomePage() {
     return (
         <section id="home-page-section" className="container">
             <div className="home-page-welcome top-title">
-                <h1>Seja muito bem vindo</h1>
+                <h1>Seja muito bem vindo</h1> <Link to="/automobile-register"> + Adicionar automóvel</Link>
             </div>
             <div className="home-page-catalog-cards">
                 {
