@@ -13,15 +13,18 @@ export default function HistoryPage() {
     const [numberPage, setNumberPage] = useState<number>(0);
     const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-
+    const [locationsIsEmpty, setLocationsIsEmpty] = useState<boolean>(false);
 
     useEffect(() => {
         setLoading(true);
         locationService.findAll(numberPage).then(response => {
-            setLoading(false)
             const nextPage = response.data.content;
             setLocations(locations.concat(nextPage))
             setIsLastPage(response.data.last);
+            setLoading(false);
+            if (locations.length === 0) {
+                setLocationsIsEmpty(true);
+            }
         })
     }, [numberPage]);
 
@@ -36,11 +39,14 @@ export default function HistoryPage() {
             </div>
             <div className="history-page-location-cards">
                 {
-                    locations.length <= 0 ?
-                        !loading &&
-                        <h3>Não existem locações</h3>
-                        :
-                        locations.map(location => (<LocationCard key={location.id} locationProps={location} />))
+                    locations.length > 0 &&
+                    locations.map(location => (<LocationCard key={location.id} locationProps={location} />))
+                }
+                {
+                    (locations.length <= 0 && !loading && locationsIsEmpty) &&
+                    <div className="location-list-isempty">
+                        <h3>Não existem locações.</h3>
+                    </div>
                 }
                 {
                     loading &&

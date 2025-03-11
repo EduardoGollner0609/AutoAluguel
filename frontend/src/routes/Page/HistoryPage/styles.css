@@ -5,7 +5,7 @@
   margin-bottom: 10px;
 }
 
-.history-page-location-cards h3 {
+.location-list-isempty h3 {
   text-align: center;
 }
 
@@ -17,7 +17,7 @@
 .loading-locations-list img {
   height: 100px;
   width: 100px;
-} 
+}
 
 @media (max-width: 768px) {
   .history-page-location-cards {
