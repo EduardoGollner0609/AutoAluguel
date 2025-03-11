@@ -28,7 +28,7 @@ export default function HomePage() {
     return (
         <section id="home-page-section" className="container">
             <div className="home-page-welcome top-title">
-                <h2>Seja muito bem vindo</h2> <Link to="/automobile-register"> + Adicionar automóvel</Link>
+                <h2>Seja muito bem vindo</h2> <Link to="/automobile-register/create"> + Adicionar automóvel</Link>
             </div>
             {
                 automobiles.length > 0 &&

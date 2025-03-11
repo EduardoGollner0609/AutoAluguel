@@ -6,6 +6,7 @@ type Props = {
     closeCard: () => void
 }
 export function CardSucess({ message, totalValue, closeCard }: Props) {
+
     return (
         <>
             <div className="card-sucess-background" onClick={closeCard}>
@@ -13,7 +14,9 @@ export function CardSucess({ message, totalValue, closeCard }: Props) {
             <div className="card-sucess">
                 <h2>{message} com sucesso!</h2>
                 {
-                    (totalValue > 0) && <p>O valor total da locação é de R$ {totalValue.toFixed(2)}</p>
+                    totalValue > 0 &&
+                    <p>O valor total da locação é de R$ {totalValue.toFixed(2)}</p>
+
                 }
                 <button onClick={closeCard}>Fechar</button>
             </div>

@@ -16,7 +16,7 @@ function App() {
           <Route path="history" element={<HistoryPage />} />
           <Route path="automobile-details/:automobileId" element={<AutomobileDetails />} />
           <Route path="user-register" element={<ClientRegister />} />
-          <Route path="automobile-register" element={<AutomobileRegister />} />
+          <Route path="automobile-register/:automobileId" element={<AutomobileRegister />} />
         </Route>
       </Routes>
     </BrowserRouter>

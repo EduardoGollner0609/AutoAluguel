@@ -52,6 +52,17 @@ public class AutomobileService {
 		return new AutomobileDTO(automobile);
 	}
 
+	@Transactional
+	public AutomobileDTO update(Long id, AutomobileInsertDTO automobileInsertDTO) {
+		Automobile automobile = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Automovel não encontrado"));
+		if (automobile.getReturned() == false) {
+			throw new RentalException("Não é possível atualizar os dados de um carro ques está alugado.");
+		}
+		copyDtoToEntity(automobile, automobileInsertDTO);
+		return new AutomobileDTO(repository.save(automobile));
+	}
+
 	// Delete
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {

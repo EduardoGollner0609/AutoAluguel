@@ -6,20 +6,27 @@ import { BrandDTO, ModelDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
 import { selectStyles } from '../../../utils/select';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormSelect from '../../../components/FormSelect';
 import loadingIcon from '../../../assets/spinner-loading-icon.svg';
+import { CardError } from '../../../components/CardError';
 
 
 export function AutomobileRegister() {
 
     const navigate = useNavigate();
 
+    const params = useParams();
+
+    const isEditing = params.automobileId !== "create";
+
     const [formData, setFormData] = useState(formEmpty());
 
     const [brands, setBrands] = useState<BrandDTO[]>([]);
 
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [messageError, setMessageError] = useState<string>('');
 
     function formEmpty() {
         return {
@@ -115,6 +122,12 @@ export function AutomobileRegister() {
     }
 
     useEffect(() => {
+        if (isEditing) {
+            automobileService.findById(Number(params.automobileId)).then(response => {
+                const newFormData = forms.updateAll(formData, response.data)
+                setFormData(newFormData);
+            });
+        }
         brandService.findAll().then(response => {
             setBrands(response.data);
         }
@@ -146,17 +159,33 @@ export function AutomobileRegister() {
 
         const requestBody = forms.toValues(formData);
 
-        automobileService.insert(requestBody).then(() => {
-            navigate("/");
+        if (isEditing) {
+            automobileService.update(Number(params.automobileId), requestBody).then(() => {
+                navigate("/");
+            }).catch(error => {
+                setLoading(true);
+                const newInputs = forms.setBackendErrors(
+                    formData,
+                    error.response.data.errors
+                );
+                setFormData(newInputs);
+                setMessageError(error);
+            })
         }
-        ).catch(error => {
-            setLoading(true);
-            const newInputs = forms.setBackendErrors(
-                formData,
-                error.response.data.errors
-            );
-            setFormData(newInputs);
-        })
+        else {
+            automobileService.insert(requestBody).then(() => {
+                navigate("/");
+            }
+            ).catch(error => {
+                setLoading(true);
+                const newInputs = forms.setBackendErrors(
+                    formData,
+                    error.response.data.errors
+                );
+                setFormData(newInputs);
+            })
+        }
+
     }
 
     return (
@@ -271,6 +300,9 @@ export function AutomobileRegister() {
                         </div>
                 }
             </div>
+            {
+                messageError && <CardError message={messageError} closeCard={() => setMessageError('')} />
+            }
         </section>
     );
 }

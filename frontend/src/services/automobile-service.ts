@@ -14,6 +14,10 @@ export function insert(requestBody: AutomobileDTO) {
   return axios.post(BASE_URL + "/automobiles", requestBody);
 }
 
+export function update(id: number, requestBody: AutomobileDTO) {
+  return axios.put(BASE_URL + `/automobiles/${id}`, requestBody);
+}
+
 export function deleteById(id: number) {
   return axios.delete(BASE_URL + `/automobiles/${id}`);
 }
