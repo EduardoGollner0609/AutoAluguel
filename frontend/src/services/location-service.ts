@@ -15,3 +15,7 @@ export function insert(requestBody: LocationInsertDTO | undefined) {
 export function update(requestBody: LocationDTO) {
   return axios.put(BASE_URL + `/locations/${requestBody.id}`, requestBody);
 }
+
+export function deleteLocation(id: number) {
+  return axios.delete(BASE_URL + `/locations/${id}`);
+}

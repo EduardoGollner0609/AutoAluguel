@@ -16,20 +16,38 @@ export default function LocationCard({ locationProps }: Props) {
 
     const [chekedConfirm, setCheckedConfirm] = useState(location.returnDate ? true : false);
 
-    const [cardDevolutionSucessVisible, setCardDevolutionSucessVisible] = useState<boolean>(false);
+    const [cardMessageSucessVisisble, setCardMessageSucessVisisble] = useState({
+        message: '',
+        totalValue: 0
+    });
+
+    const [removeSucess, setRemoveSucess] = useState<boolean>(false);
 
     function handleCheckedConfirmnClick() {
 
         locationService.update(location).then(response => {
             setCheckedConfirm(true);
             setLocation(response.data);
-            setCardDevolutionSucessVisible(true);
+            setCardMessageSucessVisisble({
+                message: "Devolvido",
+                totalValue: location.value
+            });
         });
 
     }
 
     function formatDate(date: string) {
         return format(date, 'dd/MM/yyyy HH:mm')
+    }
+
+    function deleteLocation() {
+        locationService.deleteLocation(location.id).then(() => {
+            setCardMessageSucessVisisble({
+                message: "Removido",
+                totalValue: 0
+            });
+            setRemoveSucess(true);
+        })
     }
 
     return (
@@ -58,15 +76,29 @@ export default function LocationCard({ locationProps }: Props) {
                             <p>Devolver</p>
                         </div>
                         :
+                        !removeSucess ?
+                            <div className="location-checked-space">
+                                <div className="location-checked-confirm-box">
+                                    <img src={checkLocationIcon} alt="" />
+                                    <p>Devolvido</p>
+                                </div>
+                                <div className="location-remove" onClick={deleteLocation}>
+                                    <h2>X</h2>
+                                    <p>Remover</p>
+                                </div>
+                            </div>
+                            :
+                            <div className="location-remove-sucess">
+                                <p>Removido</p>
+                            </div>
 
-                        <div className="location-checked-confirm-box">
-                            <img src={checkLocationIcon} alt="" />
-                            <p>Devolvido</p>
-                        </div>
                 }
             </div>
             {
-                cardDevolutionSucessVisible && <CardSucess message="Devolvido" totalValue={location.value} closeCard={() => setCardDevolutionSucessVisible(false)} />
+                (cardMessageSucessVisisble.message.trim() && cardMessageSucessVisisble.totalValue === 0) && <CardSucess {...cardMessageSucessVisisble} closeCard={() => setCardMessageSucessVisisble({
+                    message: '',
+                    totalValue: 0
+                })} />
             }
         </div>
 

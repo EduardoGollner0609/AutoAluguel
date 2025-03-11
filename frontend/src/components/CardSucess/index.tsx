@@ -2,7 +2,7 @@ import './styles.css';
 
 type Props = {
     message: string,
-    totalValue?: number
+    totalValue: number
     closeCard: () => void
 }
 export function CardSucess({ message, totalValue, closeCard }: Props) {
@@ -13,7 +13,7 @@ export function CardSucess({ message, totalValue, closeCard }: Props) {
             <div className="card-sucess">
                 <h2>{message} com sucesso!</h2>
                 {
-                    totalValue && <p>O valor total da locação é de R$ {totalValue.toFixed(2)}</p>
+                    (totalValue > 0) && <p>O valor total da locação é de R$ {totalValue.toFixed(2)}</p>
                 }
                 <button onClick={closeCard}>Fechar</button>
             </div>
