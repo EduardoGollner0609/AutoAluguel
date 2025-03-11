@@ -94,3 +94,9 @@
 .location-register-card-close button {
   border-radius: 50%;
 }
+
+@media (max-width: 500px) {
+  .location-register-card {
+    width: 90%;
+  }
+}

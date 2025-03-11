@@ -36,6 +36,7 @@ header nav {
 
   .header-menu-options-mobile {
     display: block;
+    cursor: pointer;
   }
 
   .header-options-navegation {

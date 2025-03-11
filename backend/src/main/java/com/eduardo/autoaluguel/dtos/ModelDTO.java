@@ -2,9 +2,12 @@ package com.eduardo.autoaluguel.dtos;
 
 import com.eduardo.autoaluguel.entities.Model;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ModelDTO {
 
 	private Long id;
+	@NotBlank(message = "Campo requerido")
 	private String name;
 	private BrandDTO brand;
 

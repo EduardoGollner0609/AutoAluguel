@@ -5,9 +5,10 @@ import FormInput from '../../../components/FormInput';
 import { BrandDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
-import FormSelect from '../../../components/FormSelect';
 import { selectStyles } from '../../../utils/select';
 import { useNavigate } from 'react-router-dom';
+import FormSelect from '../../../components/FormSelect';
+
 
 export function AutomobileRegister() {
 
@@ -72,7 +73,7 @@ export function AutomobileRegister() {
                 validation: function (value: string) {
                     return /^\d+$/.test(value);
                 },
-                message: "Campo requerido",
+                message: "Campo requerido, apenas números inteiros",
             },
             valuePerDay: {
                 value: "",
@@ -81,63 +82,47 @@ export function AutomobileRegister() {
                 type: "number",
                 placeholder: "Valor por dia",
                 validation: function (value: string) {
-                    return /^\d+$/.test(value);
+                    return /^\d+([,.]\d{1,2})?$/.test(value);
                 },
-                message: "Campo requerido",
+                message: "Campo requerido, apenas 2 casas decimais permitidas",
             },
             model: {
-                value: { name: "", brand: { name: "" } },
+                value: "",
                 id: "model",
                 name: "model",
                 placeholder: "Modelo",
                 type: "text",
-                validation: function (value: { name: string, brand: { name: string } }) {
-                    return value.name.trim() !== "" && value.brand.name.trim() !== "";
+                validation: function (value: string) {
+                    return /^\d+$/.test(value);
                 },
-                message: "Marca e Modelo são obrigatórios",
+                message: "Campo requerido",
             },
+            brand: {
+                value: {},
+                id: "brand",
+                name: "brand",
+                placeholder: "Marca",
+                type: "text",
+                validation: function (value: BrandDTO) {
+                    return !(value == null || value.id === undefined || value.id === 0 || value.name.trim() === "");
+                }
+                ,
+                message: "Campo requerido"
+            }
         };
     }
 
     useEffect(() => {
-        brandService.findAll().then(response =>
-            setBrands(response.data)
+        brandService.findAll().then(response => {
+            setBrands(response.data);
+        }
         )
     }, []);
 
-    function handleInputChange(event: any) {
-        const { name, value } = event.target;
-
-        setFormData((prev) => {
-            if (name === "model") {
-                return {
-                    ...prev,
-                    model: {
-                        ...prev.model,
-                        value: {
-                            ...prev.model.value,
-                            name: value,
-                        },
-                    },
-                };
-            } else if (name === "brand") {
-                return {
-                    ...prev,
-                    model: {
-                        ...prev.model,
-                        value: {
-                            ...prev.model.value,
-                            brand: {
-                                ...prev.model.value.brand,
-                                name: value,
-                            },
-                        },
-                    },
-                };
-            }
-
-            return forms.updateAndValidate(prev, name, value);
-        });
+    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setFormData(
+            forms.updateAndValidate(formData, event.target.name, event.target.value)
+        );
     }
 
     function handleTurnDirty(name: string) {
@@ -156,9 +141,6 @@ export function AutomobileRegister() {
 
         const requestBody = forms.toValues(formData);
 
-        console.log(requestBody);
-
-
         automobileService.insert(requestBody).then(() => {
             navigate("/")
         }
@@ -167,10 +149,8 @@ export function AutomobileRegister() {
                 formData,
                 error.response.data.errors
             );
-            console.log(newInputs);
             setFormData(newInputs);
         })
-
 
     }
 
@@ -231,46 +211,31 @@ export function AutomobileRegister() {
                         <label>Modelo</label>
                         <FormInput
                             {...formData.model}
-                            value={formData.model.value.name}
+                            value={formData.model.value}
                             onTurnDirty={handleTurnDirty}
-                            onChange={
-                                (e: any) =>
-                                    setFormData((prev) => ({
-                                        ...prev,
-                                        model: {
-                                            ...prev.model,
-                                            value: {
-                                                ...prev.model.value,
-                                                name: e.target.value,
-                                            },
-                                        },
-                                    }))
-                            } />
+                            onChange={handleInputChange}
+                        />
                         <div className="form-error">{formData.model.message}</div>
                     </div>
-                    <div className="register-card-select-brand">
+                    <div className="register-card-select-brand form-item-input-select">
                         <label>Marca</label>
                         <FormSelect
-                            {...formData.model}
-                            value={brands.find((b) => b.name === formData.model.value?.brand?.name) || ""}
+                            {...formData.brand}
+                            placeholder="Marca"
                             styles={selectStyles}
                             options={brands}
-                            onChange={(selectedBrand: BrandDTO) =>
-                                setFormData((prev) => ({
-                                    ...prev,
-                                    model: {
-                                        ...prev.model,
-                                        value: {
-                                            ...prev.model.value,
-                                            brand: selectedBrand,
-                                        },
-                                    },
-                                }))
-                            }
-                            onTurnDirty={handleTurnDirty}
+                            onChange={(obj: any) => {
+                                const newFormData = forms.updateAndValidate(
+                                    formData,
+                                    "brand",
+                                    obj
+                                );
+                                setFormData(newFormData);
+                            }}
                             getOptionLabel={(obj: any) => obj.name}
                             getOptionValue={(obj: any) => String(obj.id)}
                         />
+
                         <div className="form-error">
                             {formData.model.message}
                         </div>

@@ -10,7 +10,8 @@ export function CardError({ message, closeCard }: Props) {
             <div className="card-error-background" onClick={closeCard}>
             </div>
             <div className="card-error">
-                <h2>Erro: {message}!</h2>
+                <h2>Erro</h2>
+                <p>{message}</p>
                 <button onClick={closeCard}>Fechar</button>
             </div>
         </>

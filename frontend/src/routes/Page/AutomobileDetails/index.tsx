@@ -37,7 +37,10 @@ export default function AutomobileDetails() {
     function handleDeleteClick(id: number) {
         automobileService.deleteById(id).then(() => {
             navigate("/");
-        })
+        }).catch(error => {
+            setErrorMessage(error.response.data.message);
+        }
+        )
     }
 
     return (

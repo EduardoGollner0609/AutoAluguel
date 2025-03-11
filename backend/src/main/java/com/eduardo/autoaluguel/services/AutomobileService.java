@@ -13,7 +13,6 @@ import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Brand;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
-import com.eduardo.autoaluguel.repositories.LocationRepository;
 import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
@@ -29,9 +28,6 @@ public class AutomobileService {
 
 	@Autowired
 	private ModelRepository modelRepository;
-
-	@Autowired
-	private LocationRepository locationRepository;
 
 	// Create
 	@Transactional
@@ -75,10 +71,10 @@ public class AutomobileService {
 			throw new ResourceNotFoundException("Automóvel não encontrado");
 		}
 		try {
-			locationRepository.deleteAllByAutomobileId(id);
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DatabaseException("Não é possivel apagar esse veiculo");
+			throw new DatabaseException(
+					"Não é possivel apagar esse veiculo. Por favor remova os regsitros relacionados a esse carro.");
 		}
 	}
 

@@ -19,6 +19,7 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 4px;
+  min-width: 400px;
 }
 
 .card-sucess h2 {
@@ -32,4 +33,11 @@
   border-radius: 4px;
   width: 100%;
   max-width: 200px;
+}
+
+
+@media (max-width: 464px) {
+  .card-sucess {
+    min-width: 90%;
+  }
 }
