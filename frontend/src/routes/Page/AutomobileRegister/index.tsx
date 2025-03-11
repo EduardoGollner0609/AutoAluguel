@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
-import { BrandDTO } from '../../../models/automobile';
+import { BrandDTO, ModelDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
 import { selectStyles } from '../../../utils/select';
 import { useNavigate } from 'react-router-dom';
 import FormSelect from '../../../components/FormSelect';
+import loadingIcon from '../../../assets/spinner-loading-icon.svg';
 
 
 export function AutomobileRegister() {
@@ -17,6 +18,8 @@ export function AutomobileRegister() {
     const [formData, setFormData] = useState(formEmpty());
 
     const [brands, setBrands] = useState<BrandDTO[]>([]);
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -73,7 +76,7 @@ export function AutomobileRegister() {
                 validation: function (value: string) {
                     return /^\d+$/.test(value);
                 },
-                message: "Campo requerido, apenas números inteiros",
+                message: "Campo requerido, apenas números inteiros positivos",
             },
             valuePerDay: {
                 value: "",
@@ -87,18 +90,17 @@ export function AutomobileRegister() {
                 message: "Campo requerido, apenas 2 casas decimais permitidas",
             },
             model: {
-                value: "",
+                value: { id: null, name: "" },
                 id: "model",
                 name: "model",
                 placeholder: "Modelo",
                 type: "text",
-                validation: function (value: string) {
-                    return /^\d+$/.test(value);
+                validation: function (value: ModelDTO) {
+                    return !(value == null || value.name === "");
                 },
                 message: "Campo requerido",
             },
             brand: {
-                value: {},
                 id: "brand",
                 name: "brand",
                 placeholder: "Marca",
@@ -130,6 +132,7 @@ export function AutomobileRegister() {
     }
 
     function handleSubmit(event: any) {
+
         event.preventDefault();
 
         const formDataValidated = forms.dirtyAndValidateAll(formData);
@@ -139,112 +142,134 @@ export function AutomobileRegister() {
             return;
         }
 
+        setLoading(true);
+
         const requestBody = forms.toValues(formData);
 
         automobileService.insert(requestBody).then(() => {
-            navigate("/")
+            navigate("/");
         }
         ).catch(error => {
+            setLoading(true);
             const newInputs = forms.setBackendErrors(
                 formData,
                 error.response.data.errors
             );
             setFormData(newInputs);
         })
-
     }
 
     return (
         <section id="automobile-section" className="container">
             <div className="page-register-card">
                 <h2>Criar Automobile</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>URL da Imagem</label>
-                        <FormInput
-                            {...formData.imgUrl}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.imgUrl.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Placa</label>
-                        <FormInput
-                            {...formData.plate}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.plate.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Ano</label>
-                        <FormInput
-                            {...formData.year}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.year.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Kilometragem</label>
-                        <FormInput
-                            {...formData.km}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.km.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Valor por dia</label>
-                        <FormInput
-                            {...formData.valuePerDay}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.valuePerDay.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Cor</label>
-                        <FormInput
-                            {...formData.color}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange} />
-                        <div className="form-error">{formData.color.message}</div>
-                    </div>
-                    <div className="register-card-form-item-input form-item-input">
-                        <label>Modelo</label>
-                        <FormInput
-                            {...formData.model}
-                            value={formData.model.value}
-                            onTurnDirty={handleTurnDirty}
-                            onChange={handleInputChange}
-                        />
-                        <div className="form-error">{formData.model.message}</div>
-                    </div>
-                    <div className="register-card-select-brand form-item-input-select">
-                        <label>Marca</label>
-                        <FormSelect
-                            {...formData.brand}
-                            placeholder="Marca"
-                            styles={selectStyles}
-                            options={brands}
-                            onChange={(obj: any) => {
-                                const newFormData = forms.updateAndValidate(
-                                    formData,
-                                    "brand",
-                                    obj
-                                );
-                                setFormData(newFormData);
-                            }}
-                            getOptionLabel={(obj: any) => obj.name}
-                            getOptionValue={(obj: any) => String(obj.id)}
-                        />
+                {
+                    !loading ?
+                        <form onSubmit={handleSubmit}>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>URL da Imagem</label>
+                                <FormInput
+                                    {...formData.imgUrl}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.imgUrl.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Placa</label>
+                                <FormInput
+                                    {...formData.plate}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.plate.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Ano</label>
+                                <FormInput
+                                    {...formData.year}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.year.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Kilometragem</label>
+                                <FormInput
+                                    {...formData.km}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.km.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Valor por dia</label>
+                                <FormInput
+                                    {...formData.valuePerDay}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.valuePerDay.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Cor</label>
+                                <FormInput
+                                    {...formData.color}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange} />
+                                <div className="form-error">{formData.color.message}</div>
+                            </div>
+                            <div className="register-card-form-item-input form-item-input">
+                                <label>Modelo</label>
+                                <FormInput
+                                    {...formData.model}
+                                    value={formData.model.value.name}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 
-                        <div className="form-error">
-                            {formData.model.message}
+                                        const newObj = {
+                                            id: null,
+                                            name: event.target.value
+                                        }
+
+                                        const newFormData = forms.updateAndValidate(
+                                            formData,
+                                            "model",
+                                            newObj
+                                        );
+                                        setFormData(newFormData);
+                                    }}
+                                />
+                                <div className="form-error">{formData.model.message}</div>
+                            </div>
+                            <div className="register-card-select-brand form-item-input-select">
+                                <label>Marca</label>
+                                <FormSelect
+                                    {...formData.brand}
+                                    placeholder="Marca"
+                                    styles={selectStyles}
+                                    options={brands}
+                                    onChange={(obj: any) => {
+                                        const newFormData = forms.updateAndValidate(
+                                            formData,
+                                            "brand",
+                                            obj
+                                        );
+                                        setFormData(newFormData);
+                                    }}
+                                    onTurnDirty={handleTurnDirty}
+                                    getOptionLabel={(obj: any) => obj.name}
+                                    getOptionValue={(obj: any) => String(obj.id)}
+                                />
+
+                                <div className="form-error">
+                                    {formData.brand.message}
+                                </div>
+                            </div>
+                            <div className="register-card-btn">
+                                <button onClick={handleSubmit}>Criar</button>
+                            </div>
+                        </form>
+                        :
+                        <div className="register-automobile-loading">
+                            <img src={loadingIcon} alt="" />
                         </div>
-                    </div>
-
-                    <div className="register-card-btn">
-                        <button onClick={handleSubmit}>Criar</button>
-                    </div>
-                </form>
+                }
             </div>
         </section>
     );

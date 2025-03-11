@@ -1,6 +1,7 @@
 package com.eduardo.autoaluguel.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
+import com.eduardo.autoaluguel.dtos.AutomobileInsertDTO;
 import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Brand;
 import com.eduardo.autoaluguel.entities.Model;
@@ -17,8 +19,6 @@ import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
 import com.eduardo.autoaluguel.services.exceptions.ResourceNotFoundException;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AutomobileService {
@@ -31,9 +31,9 @@ public class AutomobileService {
 
 	// Create
 	@Transactional
-	public AutomobileDTO insert(AutomobileDTO automobileDTO) {
+	public AutomobileDTO insert(AutomobileInsertDTO automobileInsertDTO) {
 		Automobile automobile = new Automobile();
-		copyDtoToEntity(automobile, automobileDTO, true);
+		copyDtoToEntity(automobile, automobileInsertDTO);
 		return new AutomobileDTO(repository.save(automobile));
 	}
 
@@ -50,18 +50,6 @@ public class AutomobileService {
 		Automobile automobile = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Automóvel não encontrado"));
 		return new AutomobileDTO(automobile);
-	}
-
-	// Update
-	@Transactional
-	public AutomobileDTO update(Long id, AutomobileDTO automobileDTO) {
-		try {
-			Automobile automobile = repository.getReferenceById(id);
-			copyDtoToEntity(automobile, automobileDTO, false);
-			return new AutomobileDTO(repository.save(automobile));
-		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Automóvel não encontrado");
-		}
 	}
 
 	// Delete
@@ -90,29 +78,33 @@ public class AutomobileService {
 		return repository.save(automobile);
 	}
 
-	private void copyDtoToEntity(Automobile automobile, AutomobileDTO automobileDTO, boolean isInsert) {
-		automobile.setImgUrl(automobileDTO.getImgUrl());
-		automobile.setPlate(automobileDTO.getPlate());
-		automobile.setColor(automobileDTO.getColor());
-		automobile.setKm(automobileDTO.getKm());
-		automobile.setYear(automobileDTO.getYear());
-		automobile.setValuePerDay(automobileDTO.getValuePerDay());
-		automobile.setReturned(automobileDTO.getReturned());
+	private void copyDtoToEntity(Automobile automobile, AutomobileInsertDTO automobileInsertDTO) {
+		automobile.setImgUrl(automobileInsertDTO.getImgUrl());
+		automobile.setPlate(automobileInsertDTO.getPlate());
+		automobile.setColor(automobileInsertDTO.getColor());
+		automobile.setKm(automobileInsertDTO.getKm());
+		automobile.setYear(automobileInsertDTO.getYear());
+		automobile.setValuePerDay(automobileInsertDTO.getValuePerDay());
+		automobile.setReturned(true);
 
-		Model model = new Model();
+		String modelName = automobileInsertDTO.getModel().getName();
 
-		if (isInsert == true) {
-			automobile.setReturned(true);
-			Brand brand = new Brand();
-			brand.setId(automobileDTO.getModel().getBrand().getId());
+		Optional<Model> optionalModel = modelRepository.findByNameIgnoreCase(modelName);
+
+		Brand brand = new Brand(automobileInsertDTO.getBrand().getId(), automobileInsertDTO.getBrand().getName());
+
+		if (optionalModel.isEmpty()) {
+			Model newModel = new Model();
+			newModel.setName(modelName);
+			newModel.setBrand(brand);
+			modelRepository.save(newModel);
+			automobile.setModel(newModel);
+		} else {
+			Model model = optionalModel.get();
+			model.setName(modelName);
 			model.setBrand(brand);
-			model.setName(automobileDTO.getModel().getName());
-			model = modelRepository.save(model);
 			automobile.setModel(model);
-			return;
 		}
-
-		model.setId(automobileDTO.getModel().getId());
-		automobile.setModel(model);
 	}
+
 }

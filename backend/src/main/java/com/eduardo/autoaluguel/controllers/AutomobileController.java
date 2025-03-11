@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.eduardo.autoaluguel.dtos.AutomobileDTO;
+import com.eduardo.autoaluguel.dtos.AutomobileInsertDTO;
 import com.eduardo.autoaluguel.services.AutomobileService;
 
 @RestController
@@ -26,8 +26,8 @@ public class AutomobileController {
 	private AutomobileService service;
 
 	@PostMapping
-	public ResponseEntity<AutomobileDTO> insert(@RequestBody AutomobileDTO automobileDTO) {
-		automobileDTO = service.insert(automobileDTO);
+	public ResponseEntity<AutomobileDTO> insert(@RequestBody AutomobileInsertDTO automobileInsertDTO) {
+		AutomobileDTO automobileDTO = service.insert(automobileInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(automobileDTO.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(automobileDTO);
@@ -42,12 +42,6 @@ public class AutomobileController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<AutomobileDTO> findById(@PathVariable Long id) {
 		AutomobileDTO automobileDTO = service.findById(id);
-		return ResponseEntity.ok(automobileDTO);
-	}
-
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<AutomobileDTO> update(@PathVariable Long id, @RequestBody AutomobileDTO automobileDTO) {
-		automobileDTO = service.update(id, automobileDTO);
 		return ResponseEntity.ok(automobileDTO);
 	}
 

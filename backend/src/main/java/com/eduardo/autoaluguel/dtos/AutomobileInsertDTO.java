@@ -1,54 +1,42 @@
 package com.eduardo.autoaluguel.dtos;
 
-import com.eduardo.autoaluguel.entities.Automobile;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public class AutomobileDTO {
+public class AutomobileInsertDTO {
 
-	private Long id;
+	@NotBlank(message = "Campo requerido")
+	@Size(min = 10, message = "Minimo de 10 caracteres")
 	private String imgUrl;
+	@NotBlank(message = "Campo requerido")
 	private String plate;
+	@NotBlank(message = "Campo requerido")
 	private Integer year;
+	@NotBlank(message = "Campo requerido")
 	private String color;
+	@NotBlank(message = "Campo requerido")
 	private Long km;
+	@NotBlank(message = "Campo requerido")
 	private Double valuePerDay;
-	private Boolean returned;
+	@NotNull(message = "Deve ter um modelo")
 	private ModelDTO model;
+	@NotNull(message = "Deve ter uma marca")
+	private BrandDTO brand;
 
-	public AutomobileDTO() {
+	public AutomobileInsertDTO() {
 	}
 
-	public AutomobileDTO(Long id, String imgUrl, String plate, Integer year, String color, Long km, Double valuePerDay,
-			Boolean returned, ModelDTO model) {
-		super();
-		this.id = id;
+	public AutomobileInsertDTO(String imgUrl, String plate, Integer year, String color, Long km, Double valuePerDay,
+			ModelDTO model, BrandDTO brand) {
 		this.imgUrl = imgUrl;
 		this.plate = plate;
 		this.year = year;
 		this.color = color;
 		this.km = km;
 		this.valuePerDay = valuePerDay;
-		this.returned = returned;
 		this.model = model;
-	}
-
-	public AutomobileDTO(Automobile automobile) {
-		id = automobile.getId();
-		imgUrl = automobile.getImgUrl();
-		plate = automobile.getPlate();
-		year = automobile.getYear();
-		color = automobile.getColor();
-		km = automobile.getKm();
-		valuePerDay = automobile.getValuePerDay();
-		returned = automobile.getReturned();
-		model = new ModelDTO(automobile.getModel());
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		this.brand = brand;
 	}
 
 	public String getImgUrl() {
@@ -99,20 +87,20 @@ public class AutomobileDTO {
 		this.valuePerDay = valuePerDay;
 	}
 
-	public Boolean getReturned() {
-		return returned;
-	}
-
-	public void setReturned(Boolean returned) {
-		this.returned = returned;
-	}
-
 	public ModelDTO getModel() {
 		return model;
 	}
 
 	public void setModel(ModelDTO model) {
 		this.model = model;
+	}
+
+	public BrandDTO getBrand() {
+		return brand;
+	}
+
+	public void setBrand(BrandDTO brand) {
+		this.brand = brand;
 	}
 
 }
