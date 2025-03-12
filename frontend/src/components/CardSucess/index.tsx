@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 type Props = {
@@ -6,6 +7,12 @@ type Props = {
     closeCard: () => void
 }
 export function CardSucess({ message, totalValue, closeCard }: Props) {
+
+    const navigate = useNavigate();
+
+    function navigateToHome() {
+        navigate("/");
+    }
 
     return (
         <>
@@ -16,9 +23,12 @@ export function CardSucess({ message, totalValue, closeCard }: Props) {
                 {
                     totalValue > 0 &&
                     <p>O valor total da locação é de R$ {totalValue.toFixed(2)}</p>
-
                 }
-                <button onClick={closeCard}>Fechar</button>
+                <div className="card-sucess-btns">
+                    <button onClick={navigateToHome}>Inicio</button>
+                    <button onClick={closeCard}>Fechar</button>
+
+                </div>
             </div>
         </>
 

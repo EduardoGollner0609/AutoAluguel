@@ -24,6 +24,7 @@
 
 .card-sucess h2 {
   color: #127ed6;
+  text-align: center;
 }
 
 .card-sucess button {
@@ -32,12 +33,29 @@
   padding: 4px 8px;
   border-radius: 4px;
   width: 100%;
-  max-width: 200px;
+  max-width: 100px;
 }
 
+.card-sucess-btns {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
 
 @media (max-width: 464px) {
   .card-sucess {
     min-width: 90%;
+    padding: 30px;
+    gap: 10px;
+  }
+
+  .card-sucess-btns {
+    flex-direction: column;
+  }
+
+  .card-sucess button {
+    max-width: none;
   }
 }

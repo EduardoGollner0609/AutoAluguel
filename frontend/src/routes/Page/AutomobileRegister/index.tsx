@@ -6,15 +6,14 @@ import { BrandDTO, ModelDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
 import { selectStyles } from '../../../utils/select';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import FormSelect from '../../../components/FormSelect';
 import loadingIcon from '../../../assets/spinner-loading-icon.svg';
 import { CardError } from '../../../components/CardError';
+import { CardSucess } from '../../../components/CardSucess';
 
 
 export function AutomobileRegister() {
-
-    const navigate = useNavigate();
 
     const params = useParams();
 
@@ -27,6 +26,8 @@ export function AutomobileRegister() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [messageError, setMessageError] = useState<string>('');
+
+    const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -124,9 +125,38 @@ export function AutomobileRegister() {
     useEffect(() => {
         if (isEditing) {
             automobileService.findById(Number(params.automobileId)).then(response => {
-                const newFormData = forms.updateAll(formData, response.data)
-                setFormData(newFormData);
+                const automobile = response.data;
+                const { model, ...rest } = automobile;
+
+                const newFormData = forms.updateAll(formData, rest);
+
+                setFormData({
+                    ...newFormData,
+                    model: {
+                        value: { id: model?.id || null, name: model?.name || "" },
+                        id: "model",
+                        name: "model",
+                        placeholder: "Modelo",
+                        type: "text",
+                        validation: (value: ModelDTO) => !(value == null || value.name === ""),
+                        message: "Campo requerido",
+                    },
+                    brand: {
+                        value: model?.brand
+                            ? { id: model.brand.id || null, name: model.brand.name || "" }
+                            : { id: null, name: "" },
+                        id: "brand",
+                        name: "brand",
+                        placeholder: "Marca",
+                        type: "text",
+                        validation: (value: BrandDTO) => !(value == null || value.id === undefined || value.id === 0 || value.name.trim() === ""),
+                        message: "Campo requerido"
+                    }
+                });
+
+
             });
+
         }
         brandService.findAll().then(response => {
             setBrands(response.data);
@@ -161,7 +191,7 @@ export function AutomobileRegister() {
 
         if (isEditing) {
             automobileService.update(Number(params.automobileId), requestBody).then(() => {
-                navigate("/");
+                setCardSucessVissible(true);
             }).catch(error => {
                 setLoading(true);
                 const newInputs = forms.setBackendErrors(
@@ -170,11 +200,11 @@ export function AutomobileRegister() {
                 );
                 setFormData(newInputs);
                 setMessageError(error);
-            })
+            });
         }
         else {
             automobileService.insert(requestBody).then(() => {
-                navigate("/");
+                setCardSucessVissible(true);
             }
             ).catch(error => {
                 setLoading(true);
@@ -302,6 +332,9 @@ export function AutomobileRegister() {
             </div>
             {
                 messageError && <CardError message={messageError} closeCard={() => setMessageError('')} />
+            }
+            {
+                cardSucessVisible && <CardSucess message='Salvo' totalValue={0} closeCard={() => setCardSucessVissible(false)} />
             }
         </section>
     );

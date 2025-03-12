@@ -28,6 +28,10 @@ public class ClientValidator implements ConstraintValidator<ClientValid, ClientD
 
 		List<FieldMessage> list = new ArrayList<>();
 
+		if (dto.getCpf().matches(".*[,.\\-].*")) {
+			list.add(new FieldMessage("cpf", "O CPF deve receber apenas números."));
+		}
+
 		Optional<Client> client = repository.findByCpf(dto.getCpf());
 
 		if (client.isPresent()) {
@@ -39,7 +43,7 @@ public class ClientValidator implements ConstraintValidator<ClientValid, ClientD
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
-		
+
 		return list.isEmpty();
 	}
 }

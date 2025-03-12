@@ -1,0 +1,9 @@
+.client-register-loading {
+  display: flex;
+  justify-content: center;
+}
+
+.client-register-loading img {
+  height: 100px;
+  width: 100px;
+}
