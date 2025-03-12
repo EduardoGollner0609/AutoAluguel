@@ -84,6 +84,11 @@
   height: 100px;
 }
 
+.location-card-loading img {
+  height: 100px;
+  width: 100px;
+}
+
 @media (max-width: 768px) {
   .location-card {
     flex-direction: column;

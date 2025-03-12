@@ -1,3 +1,4 @@
+import './styles.css';
 import { useEffect, useState } from 'react';
 import { AutomobileDTO } from '../../../models/automobile';
 import * as automobileService from '../../../services/automobile-service';
@@ -5,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AutomobileDetailsCard from '../../../components/AutomobileDetailsCard';
 import LocationRegisterCard from '../../../components/LocationRegisterCard';
 import { CardError } from '../../../components/CardError';
+import loadingIcon from '../../../assets/spinner-loading-icon.svg';
 
 export default function AutomobileDetails() {
 
@@ -46,7 +48,11 @@ export default function AutomobileDetails() {
     return (
         <section id="automobile-details-section" className="container">
             {
-                automobile && <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} deleteFunction={handleDeleteClick} />
+                automobile ? <AutomobileDetailsCard rentFunction={handleRentClick} automobile={automobile} deleteFunction={handleDeleteClick} />
+                    :
+                    <div className="automobile-details-loading">
+                        <img src={loadingIcon} alt="" />
+                    </div>
             }
             {
                 rentCardVisible && <LocationRegisterCard rentCardVisible={handleRentCloseClick} automobile={automobile} />

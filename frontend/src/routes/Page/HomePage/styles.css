@@ -33,6 +33,10 @@
 }
 
 @media (max-width: 620px) {
+  .home-page-welcome {
+    flex-direction: column;
+    gap: 10px;
+  }
   .home-page-welcome h2 {
     font-size: 20px;
   }
@@ -40,12 +44,5 @@
   .home-page-welcome a {
     padding: 4px 10px;
     width: 100%;
-  }
-}
-
-@media (max-width: 576px) {
-  .home-page-welcome {
-    flex-direction: column;
-    gap: 10px;
   }
 }

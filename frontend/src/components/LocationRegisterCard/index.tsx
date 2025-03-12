@@ -8,6 +8,7 @@ import { ClientDTO } from '../../models/client';
 import { AutomobileDTO } from '../../models/automobile';
 import { LocationInsertDTO } from '../../models/location';
 import * as locationService from '../../services/location-service';
+import loadingIcon from '../../assets/spinner-loading-icon.svg';
 
 type Props = {
     automobile: AutomobileDTO | undefined,
@@ -21,6 +22,8 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
     const [formData, setFormData] = useState(formEmpty);
 
     const [client, setClient] = useState<ClientDTO>();
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     function formEmpty() {
         return {
@@ -56,11 +59,15 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
             return;
         }
 
+        setLoading(true);
+
         const requestBody = forms.toValues(formData);
 
         clientService.findByCpf(requestBody.cpf).then(response => {
+            setLoading(false);
             setClient(response.data);
         }).catch(error => {
+            setLoading(false);
             const newInput = forms.setBackEndError(formData, formData.cpf.name, error.response.data.message);
             setFormData(newInput);
         });
@@ -92,23 +99,28 @@ export default function LocationRegisterCard({ automobile, rentCardVisible }: Pr
                 {
                     !client ?
                         <>
-                            <form onSubmit={handleSubmitSearchCpf}>
-                                <div className="location-register-card-search form-item-input">
-
-                                    <label>Digite um CPF</label>
-                                    <FormInput
-                                        autoFocus
-                                        {...formData.cpf}
-                                        onTurnDirty={handleTurnDirty}
-                                        onChange={handleInputChange} />
-                                    <div className="form-error">{formData.cpf.message}</div>
-                                    <button onClick={handleSubmitSearchCpf}>Buscar</button>
-                                </div>
-                                <div className="location-register-card-invite-register-client">
-                                    <Link to="/user-register">Cliente não tem cadastro</Link>
-                                </div>
-                            </form>
-
+                            {
+                                !loading ?
+                                    <form onSubmit={handleSubmitSearchCpf}>
+                                        <div className="location-register-card-search form-item-input">
+                                            <label>Digite um CPF</label>
+                                            <FormInput
+                                                autoFocus
+                                                {...formData.cpf}
+                                                onTurnDirty={handleTurnDirty}
+                                                onChange={handleInputChange} />
+                                            <div className="form-error">{formData.cpf.message}</div>
+                                            <button onClick={handleSubmitSearchCpf}>Buscar</button>
+                                        </div>
+                                        <div className="location-register-card-invite-register-client">
+                                            <Link to="/user-register">Cliente não tem cadastro</Link>
+                                        </div>
+                                    </form>
+                                    :
+                                    <div className="location-register-card-loading">
+                                        <img src={loadingIcon} alt="" />
+                                    </div>
+                            }
                         </>
                         :
                         <>

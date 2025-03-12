@@ -73,7 +73,7 @@ public class AutomobileService {
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(
-					"Não é possivel apagar esse veiculo. Por favor remova os regsitros relacionados a esse carro.");
+					"Não é possivel apagar esse veiculo. Por favor remova os registros relacionados a esse carro.");
 		}
 	}
 

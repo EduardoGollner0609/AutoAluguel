@@ -49,7 +49,7 @@ export function AutomobileRegister() {
                 type: "text",
                 placeholder: "Placa",
                 validation: function (value: string) {
-                    return /^[A-Z]{3}-?\d[A-Z0-9]\d{2}$/.test(value);
+                    return /.*[A-Za-z0-9]{4,}.*/.test(value);
                 },
                 message: "Placa inválida",
             },

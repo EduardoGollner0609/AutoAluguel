@@ -5,6 +5,7 @@ import { LocationDTO } from '../../models/location';
 import { format } from 'date-fns';
 import * as locationService from '../../services/location-service';
 import { CardSucess } from '../CardSucess';
+import loadingIcon from '../../assets/spinner-loading-icon.svg';
 
 type Props = {
     locationProps: LocationDTO
@@ -16,6 +17,8 @@ export default function LocationCard({ locationProps }: Props) {
 
     const [chekedConfirm, setCheckedConfirm] = useState(location.returnDate ? true : false);
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const [cardMessageSucessVisisble, setCardMessageSucessVisisble] = useState({
         message: '',
         totalValue: 0
@@ -25,12 +28,16 @@ export default function LocationCard({ locationProps }: Props) {
 
     function handleCheckedConfirmnClick() {
 
+        setLoading(true);
+
         locationService.update(location).then(response => {
+            setLoading(false);
             setCheckedConfirm(true);
-            setLocation(response.data);
+            const newLocation: LocationDTO = response.data;
+            setLocation(newLocation);
             setCardMessageSucessVisisble({
                 message: "Devolvido",
-                totalValue: location.value
+                totalValue: newLocation.value
             });
         });
 
@@ -41,7 +48,9 @@ export default function LocationCard({ locationProps }: Props) {
     }
 
     function deleteLocation() {
+        setLoading(true);
         locationService.deleteLocation(location.id).then(() => {
+            setLoading(false);
             setCardMessageSucessVisisble({
                 message: "Removido",
                 totalValue: 0
@@ -76,26 +85,37 @@ export default function LocationCard({ locationProps }: Props) {
                             <p>Devolver</p>
                         </div>
                         :
-                        !removeSucess ?
-                            <div className="location-checked-space">
-                                <div className="location-checked-confirm-box">
-                                    <img src={checkLocationIcon} alt="" />
-                                    <p>Devolvido</p>
+                        !loading ?
+                            !removeSucess ?
+                                <div className="location-checked-space">
+                                    <div className="location-checked-confirm-box">
+                                        <img src={checkLocationIcon} alt="" />
+                                        <p>Devolvido</p>
+                                    </div>
+                                    <div className="location-remove" onClick={deleteLocation}>
+                                        <h2>X</h2>
+                                        <p>Remover</p>
+                                    </div>
                                 </div>
-                                <div className="location-remove" onClick={deleteLocation}>
-                                    <h2>X</h2>
-                                    <p>Remover</p>
+                                :
+                                <div className="location-remove-sucess">
+                                    <p>Removido</p>
                                 </div>
-                            </div>
                             :
-                            <div className="location-remove-sucess">
-                                <p>Removido</p>
+                            <div className="location-card-loading">
+                                <img src={loadingIcon} alt="" />
                             </div>
 
                 }
             </div>
             {
-                (cardMessageSucessVisisble.message.trim() && cardMessageSucessVisisble.totalValue === 0) && <CardSucess {...cardMessageSucessVisisble} closeCard={() => setCardMessageSucessVisisble({
+                (cardMessageSucessVisisble.message && cardMessageSucessVisisble.totalValue === 0) && <CardSucess {...cardMessageSucessVisisble} closeCard={() => setCardMessageSucessVisisble({
+                    message: '',
+                    totalValue: 0
+                })} />
+            }
+            {
+                cardMessageSucessVisisble.totalValue > 0 && <CardSucess {...cardMessageSucessVisisble} closeCard={() => setCardMessageSucessVisisble({
                     message: '',
                     totalValue: 0
                 })} />

@@ -1,14 +1,14 @@
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Eduardo Moraes', '123.456.789-10', 'Rua das Flores, 100, Centro, SP', '(11) 98765-4321', 'eduardo.moraes@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Camila Souza', '234.567.890-12', 'Av. Brasil, 2000, Jardim São Paulo, SP', '(21) 97654-3210', 'camila.souza@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Gabriel Oliveira', '345.678.901-23', 'Rua das Palmeiras, 300, Bairro Novo, RJ', '(31) 96543-2109', 'gabriel.oliveira@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Luiza Silva', '456.789.012-34', 'Praça da República, 400, Vila Mariana, SP', '(41) 95432-1098', 'luiza.silva@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Roberto Lima', '567.890.123-45', 'Rua do Sol, 500, Jardim Paulista, SP', '(51) 94321-0987', 'roberto.lima@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Fernanda Santos', '678.901.234-56', 'Rua do Comércio, 600, Bela Vista, RJ', '(61) 93210-9876', 'fernanda.santos@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Carlos Silveira', '789.012.345-67', 'Av. Faria Lima, 700, Vila Madalena, SP', '(71) 92109-8765', 'carlos.silveira@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Aline Souza', '890.123.456-78', 'Rua das Acácias, 800, Barra da Tijuca, RJ', '(81) 91098-7654', 'aline.souza@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Joana Pereira', '901.234.567-89', 'Rua do Lago, 900, Jardim América, SP', '(91) 90987-6543', 'joana.pereira@email.com');
-INSERT INTO tb_client (name, cpf, address, phone, email) VALUES ('Ricardo Ferreira', '012.345.678-90', 'Rua das Laranjeiras, 1000, Santana, SP', '(31) 92098-5432', 'ricardo.ferreira@email.com');
-
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1992-04-05', 'Rua do Bosque, 35 - Campinas, SP', '22233344455', 'eduardo.moraes@email.com', 'Eduardo Moraes', '(19) 98765-4321');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1980-10-10', 'Rua dos Trabalhadores, 212 - Fortaleza, CE', '11223344556', 'camila.souza@email.com', 'Camila Souza', '(85) 98877-6655');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1991-07-17', 'Av. das Nações Unidas, 202 - São Paulo, SP', '33445566778', 'gabriel.oliveira@email.com', 'Gabriel Oliveira', '(11) 99655-8844');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1995-03-21', 'Rua dos Eucaliptos, 100 - Belo Horizonte, MG', '44556677889', 'luiza.silva@email.com', 'Luiza Silva', '(31) 99234-1234');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1988-11-11', 'Rua São Paulo, 540 - Curitiba, PR', '55667788990', 'roberto.lima@email.com', 'Roberto Lima', '(41) 99876-5432');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1994-05-30', 'Rua das Flores, 123 - Rio de Janeiro, RJ', '66778899001', 'fernanda.santos@email.com', 'Fernanda Santos', '(21) 98432-7878');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('2000-12-01', 'Av. Paulista, 3200 - São Paulo, SP', '77889900112', 'carlos.silveira@email.com', 'Carlos Silveira', '(11) 99543-1203');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1992-06-19', 'Rua do Sol, 150 - Salvador, BA', '88990011223', 'aline.souza@email.com', 'Aline Souza', '(71) 99321-6547');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1987-01-15', 'Rua da Liberdade, 21 - Recife, PE', '99001122334', 'joana.pereira@email.com', 'Joana Pereira', '(81) 99678-1123');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1999-08-25', 'Rua das Acácias, 215 - Porto Alegre, RS', '10111223345', 'ricardo.ferreira@email.com', 'Ricardo Ferreira', '(51) 98765-4321');
+INSERT INTO tb_client (birthdate, address, cpf, email, name, phone) VALUES ('1993-04-30', 'Av. do Contorno, 2500 - Belo Horizonte, MG', '11223344557', 'juliana.morais@email.com', 'Juliana Morais', '(31) 99567-1234');
 
 INSERT INTO tb_brand(name) VALUES ('Chevrolet');
 INSERT INTO tb_brand(name) VALUES ('Ford');

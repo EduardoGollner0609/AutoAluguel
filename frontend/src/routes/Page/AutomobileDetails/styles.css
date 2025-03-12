@@ -1,0 +1,10 @@
+.automobile-details-loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.automobile-details-loading img {
+  height: 100px;
+  width: 100px;
+}
