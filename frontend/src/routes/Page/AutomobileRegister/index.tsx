@@ -223,7 +223,7 @@ export function AutomobileRegister() {
     return (
         <section id="automobile-section" className="container">
             <div className="page-register-card">
-                <h2>Dados do Automovel</h2>
+                <h2>Dados do Automóvel</h2>
                 {
                     !loading ?
                         <form onSubmit={handleSubmit}>
