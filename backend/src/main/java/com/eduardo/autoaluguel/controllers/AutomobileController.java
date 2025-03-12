@@ -36,8 +36,8 @@ public class AutomobileController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<AutomobileDTO>> findAll(Pageable pageable) {
-		Page<AutomobileDTO> automobiles = service.findAll(pageable);
+	public ResponseEntity<Page<AutomobileDTO>> findAllPaged(Pageable pageable) {
+		Page<AutomobileDTO> automobiles = service.findAllPaged(pageable);
 		return ResponseEntity.ok(automobiles);
 	}
 

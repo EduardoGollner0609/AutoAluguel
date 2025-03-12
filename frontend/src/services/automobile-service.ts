@@ -2,8 +2,8 @@ import axios from "axios";
 import { BASE_URL } from "../utils/system";
 import { AutomobileDTO } from "../models/automobile";
 
-export function findAllOrderByReturned() {
-  return axios.get(BASE_URL + "/automobiles");
+export function findAll(page: number, size = 6) {
+  return axios.get(BASE_URL + `/automobiles?page=${page}&size=${size}`);
 }
 
 export function findById(id: number) {

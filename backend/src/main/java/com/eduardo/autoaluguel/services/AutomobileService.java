@@ -40,8 +40,8 @@ public class AutomobileService {
 
 	// Read (FindAll)
 	@Transactional(readOnly = true)
-	public Page<AutomobileDTO> findAll(Pageable pageable) {
-		Page<Automobile> automobiles = repository.findAllOrderByReturned(pageable);
+	public Page<AutomobileDTO> findAllPaged(Pageable pageable) {
+		Page<Automobile> automobiles = repository.findAllPaged(pageable);
 		return automobiles.map(automobile -> new AutomobileDTO(automobile));
 	}
 

@@ -18,7 +18,7 @@ export default function HomePage() {
 
     useEffect(() => {
         setLoading(true);
-        automobileService.findAllOrderByReturned().then(
+        automobileService.findAll(numberPage).then(
             response => {
                 const nextPage = response.data.content;
                 setAutomobiles(automobiles.concat(nextPage))
