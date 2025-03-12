@@ -54,7 +54,7 @@ export default function HomePage() {
             {
                 (automobiles.length <= 0 && !loading && automobilesIsEmpty) &&
                 <div className="catalog-isempty">
-                    <h3>Nenhum veiculo cadastro</h3>
+                    <h3>Nenhum automóvel cadastro</h3>
                 </div>
             }
             {
