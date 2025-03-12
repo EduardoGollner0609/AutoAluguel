@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Page from './routes/Page'
 import HomePage from './routes/Page/HomePage'
@@ -17,6 +17,7 @@ function App() {
           <Route path="automobile-details/:automobileId" element={<AutomobileDetails />} />
           <Route path="user-register" element={<ClientRegister />} />
           <Route path="automobile-register/:automobileId" element={<AutomobileRegister />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     </BrowserRouter>
