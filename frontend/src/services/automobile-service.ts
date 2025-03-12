@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/system";
 import { AutomobileDTO } from "../models/automobile";
 
-export function findAll(page: number, size = 6) {
+export function findAll(page: number, size = 8) {
   return axios.get(BASE_URL + `/automobiles?page=${page}&size=${size}`);
 }
 

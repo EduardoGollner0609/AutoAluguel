@@ -29,7 +29,7 @@ export default function HomePage() {
                 }
             }
         )
-    }, []);
+    }, [numberPage]);
 
     function handleNextPageClick() {
         setNumberPage(numberPage + 1);
