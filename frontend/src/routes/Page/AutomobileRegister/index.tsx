@@ -192,6 +192,7 @@ export function AutomobileRegister() {
         if (isEditing) {
             automobileService.update(Number(params.automobileId), requestBody).then(() => {
                 setCardSucessVissible(true);
+                setLoading(false);
             }).catch(error => {
                 setLoading(true);
                 const newInputs = forms.setBackendErrors(
@@ -205,6 +206,7 @@ export function AutomobileRegister() {
         else {
             automobileService.insert(requestBody).then(() => {
                 setCardSucessVissible(true);
+                setLoading(false);
             }
             ).catch(error => {
                 setLoading(true);
@@ -221,7 +223,7 @@ export function AutomobileRegister() {
     return (
         <section id="automobile-section" className="container">
             <div className="page-register-card">
-                <h2>Criar Automobile</h2>
+                <h2>Dados do Automovel</h2>
                 {
                     !loading ?
                         <form onSubmit={handleSubmit}>
@@ -315,14 +317,20 @@ export function AutomobileRegister() {
                                     getOptionLabel={(obj: any) => obj.name}
                                     getOptionValue={(obj: any) => String(obj.id)}
                                 />
-
                                 <div className="form-error">
                                     {formData.brand.message}
                                 </div>
                             </div>
-                            <div className="register-card-btn">
-                                <button onClick={handleSubmit}>Criar</button>
-                            </div>
+                            {
+                                isEditing ? <div className="register-card-btn">
+                                    <button onClick={handleSubmit}>Atualizar</button>
+                                </div>
+                                    :
+                                    <div className="register-card-btn">
+                                        <button onClick={handleSubmit}>Criar</button>
+                                    </div>
+                            }
+
                         </form>
                         :
                         <div className="register-automobile-loading">
