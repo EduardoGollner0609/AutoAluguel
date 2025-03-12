@@ -1,10 +1,11 @@
 package com.eduardo.autoaluguel.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +40,9 @@ public class AutomobileService {
 
 	// Read (FindAll)
 	@Transactional(readOnly = true)
-	public List<AutomobileDTO> findAll() {
-		List<Automobile> automobiles = repository.findAllOrderByReturned();
-		return automobiles.stream().map(automobile -> new AutomobileDTO(automobile)).toList();
+	public Page<AutomobileDTO> findAll(Pageable pageable) {
+		Page<Automobile> automobiles = repository.findAllOrderByReturned(pageable);
+		return automobiles.map(automobile -> new AutomobileDTO(automobile));
 	}
 
 	// Read (FindById)

@@ -1,9 +1,10 @@
 package com.eduardo.autoaluguel.controllers;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,8 @@ public class AutomobileController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<AutomobileDTO>> findAll() {
-		List<AutomobileDTO> automobiles = service.findAll();
+	public ResponseEntity<Page<AutomobileDTO>> findAll(Pageable pageable) {
+		Page<AutomobileDTO> automobiles = service.findAll(pageable);
 		return ResponseEntity.ok(automobiles);
 	}
 
