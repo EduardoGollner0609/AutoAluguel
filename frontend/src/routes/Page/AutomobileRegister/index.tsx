@@ -114,7 +114,7 @@ export function AutomobileRegister() {
                 placeholder: "Marca",
                 type: "text",
                 validation: function (value: BrandDTO) {
-                    return !(value == null || value.id === undefined || value.name.trim() === "");
+                    return value !== null || value !== undefined;
                 }
                 ,
                 message: "Campo requerido"
@@ -306,7 +306,7 @@ export function AutomobileRegister() {
                                     styles={selectStyles}
                                     options={brands}
                                     onChange={(obj: any) => {
-                                        const newFormData = forms.update(
+                                        const newFormData = forms.updateAndValidate(
                                             formData,
                                             "brand",
                                             obj
