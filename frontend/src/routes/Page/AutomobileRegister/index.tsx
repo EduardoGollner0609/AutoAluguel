@@ -153,15 +153,11 @@ export function AutomobileRegister() {
                         message: "Campo requerido"
                     }
                 });
-
-
             });
-
         }
         brandService.findAll().then(response => {
             setBrands(response.data);
-        }
-        )
+        });
     }, []);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -194,7 +190,7 @@ export function AutomobileRegister() {
                 setCardSucessVissible(true);
                 setLoading(false);
             }).catch(error => {
-                setLoading(true);
+                setLoading(false);
                 const newInputs = forms.setBackendErrors(
                     formData,
                     error.response.data.errors
@@ -209,7 +205,7 @@ export function AutomobileRegister() {
                 setLoading(false);
             }
             ).catch(error => {
-                setLoading(true);
+                setLoading(false);
                 const newInputs = forms.setBackendErrors(
                     formData,
                     error.response.data.errors
