@@ -114,7 +114,7 @@ export function AutomobileRegister() {
                 placeholder: "Marca",
                 type: "text",
                 validation: function (value: BrandDTO) {
-                    return value !== null || value !== undefined;
+                    return !(value == null || value.id === undefined || value.id === 0 || value.name.trim() === "");
                 }
                 ,
                 message: "Campo requerido"
