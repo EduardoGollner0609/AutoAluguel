@@ -15,7 +15,7 @@ export default function FormSelect(props: any) {
 
   return (
     <div data-invalid={invalid} data-dirty={dirty}>
-      <Select onBlur={handleBlur} {...selectProps} />
+      <Select onBlur={handleBlur} {...selectProps}  menuPortalTarget={document.body}/>
     </div>
   );
 }

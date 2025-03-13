@@ -109,7 +109,6 @@ export function AutomobileRegister() {
                 message: "Campo requerido",
             },
             brand: {
-            value: {},
                 id: "brand",
                 name: "brand",
                 placeholder: "Marca",
@@ -312,7 +311,7 @@ export function AutomobileRegister() {
                                     }}
                                     onTurnDirty={handleTurnDirty}
                                     getOptionLabel={(obj: any) => obj.name}
-                                    getOptionValue={(obj: any) => obj.id}
+                                    getOptionValue={(obj: any) => String(obj.id)}
                                 />
                                 <div className="form-error">
                                     {formData.brand.message}
