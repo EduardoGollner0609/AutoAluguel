@@ -3,7 +3,6 @@ import * as forms from '../../../utils/forms';
 import './styles.css';
 import FormInput from '../../../components/FormInput';
 import { BrandDTO, ModelDTO } from '../../../models/automobile';
-import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
 import { useParams } from 'react-router-dom';
 import loadingIcon from '../../../assets/spinner-loading-icon.svg';
@@ -18,15 +17,11 @@ export function AutomobileRegister() {
 
     const [formData, setFormData] = useState(formEmpty());
 
-    const [brands, setBrands] = useState<BrandDTO[]>([]);
-
     const [loading, setLoading] = useState<boolean>(false);
 
     const [messageError, setMessageError] = useState<string>('');
 
     const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
-
-    const [isDisabled, setIsDisabled] = useState(false);
 
     function formEmpty() {
         return {
@@ -156,9 +151,6 @@ export function AutomobileRegister() {
                 });
             });
         }
-        brandService.findAll().then(response => {
-            setBrands(response.data);
-        });
     }, []);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
