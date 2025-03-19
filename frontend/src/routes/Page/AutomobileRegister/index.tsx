@@ -5,13 +5,10 @@ import FormInput from '../../../components/FormInput';
 import { BrandDTO, ModelDTO } from '../../../models/automobile';
 import * as brandService from '../../../services/brand-service';
 import * as automobileService from '../../../services/automobile-service';
-import { selectStyles } from '../../../utils/select';
 import { useParams } from 'react-router-dom';
-import FormSelect from '../../../components/FormSelect';
 import loadingIcon from '../../../assets/spinner-loading-icon.svg';
 import { CardError } from '../../../components/CardError';
 import { CardSucess } from '../../../components/CardSucess';
-
 
 export function AutomobileRegister() {
 
@@ -28,6 +25,8 @@ export function AutomobileRegister() {
     const [messageError, setMessageError] = useState<string>('');
 
     const [cardSucessVisible, setCardSucessVissible] = useState<boolean>(false);
+
+    const [isDisabled, setIsDisabled] = useState(false);
 
     function formEmpty() {
         return {
@@ -98,23 +97,25 @@ export function AutomobileRegister() {
                 message: "Campo requerido, apenas 2 casas decimais permitidas",
             },
             model: {
-                value: { id: null, name: "" },
+                value: { name: "" } as ModelDTO,
                 id: "model",
                 name: "model",
                 placeholder: "Modelo",
                 type: "text",
                 validation: function (value: ModelDTO) {
-                    return !(value == null || value.name === "");
+                    return !(value === null || value.name === "");
                 },
                 message: "Campo requerido",
             },
             brand: {
+                value: { name: "" },
                 id: "brand",
                 name: "brand",
                 placeholder: "Marca",
                 type: "text",
                 validation: function (value: BrandDTO) {
-                    return !(value == null || value.id === undefined || value.id === 0 || value.name.trim() === "");
+                    console.log(value);
+                    return !(value === null || value.name === "");
                 }
                 ,
                 message: "Campo requerido"
@@ -149,7 +150,7 @@ export function AutomobileRegister() {
                         name: "brand",
                         placeholder: "Marca",
                         type: "text",
-                        validation: (value: BrandDTO) => !(value == null || value.id === undefined || value.id === 0 || value.name.trim() === ""),
+                        validation: (value: BrandDTO) => !(value === null || value.name === ""),
                         message: "Campo requerido"
                     }
                 });
@@ -213,7 +214,6 @@ export function AutomobileRegister() {
                 setFormData(newInputs);
             })
         }
-
     }
 
     return (
@@ -280,7 +280,6 @@ export function AutomobileRegister() {
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 
                                         const newObj = {
-                                            id: null,
                                             name: event.target.value
                                         }
 
@@ -294,24 +293,25 @@ export function AutomobileRegister() {
                                 />
                                 <div className="form-error">{formData.model.message}</div>
                             </div>
-                            <div className="register-card-select-brand form-item-input-select">
+                            <div className="register-card-form-item-input form-item-input">
                                 <label>Marca</label>
-                                <FormSelect
+                                <FormInput
                                     {...formData.brand}
-                                    placeholder="Marca"
-                                    styles={selectStyles}
-                                    options={brands}
-                                    onChange={(obj: any) => {
+                                    value={formData.brand.value.name}
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+
+                                        const newObj = {
+                                            name: event.target.value
+                                        }
+
                                         const newFormData = forms.updateAndValidate(
                                             formData,
                                             "brand",
-                                            obj
+                                            newObj
                                         );
                                         setFormData(newFormData);
                                     }}
-                                    onTurnDirty={handleTurnDirty}
-                                    getOptionLabel={(obj: any) => obj.name}
-                                    getOptionValue={(obj: any) => String(obj.id)}
                                 />
                                 <div className="form-error">
                                     {formData.brand.message}
@@ -326,7 +326,6 @@ export function AutomobileRegister() {
                                         <button onClick={handleSubmit}>Criar</button>
                                     </div>
                             }
-
                         </form>
                         :
                         <div className="register-automobile-loading">

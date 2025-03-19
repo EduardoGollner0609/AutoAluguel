@@ -1,5 +1,5 @@
 export type BrandDTO = {
-  id: number;
+  id: number | null;
   name: string;
 };
 

@@ -16,6 +16,7 @@ import com.eduardo.autoaluguel.entities.Automobile;
 import com.eduardo.autoaluguel.entities.Brand;
 import com.eduardo.autoaluguel.entities.Model;
 import com.eduardo.autoaluguel.repositories.AutomobileRepository;
+import com.eduardo.autoaluguel.repositories.BrandRepository;
 import com.eduardo.autoaluguel.repositories.ModelRepository;
 import com.eduardo.autoaluguel.services.exceptions.DatabaseException;
 import com.eduardo.autoaluguel.services.exceptions.RentalException;
@@ -29,6 +30,9 @@ public class AutomobileService {
 
 	@Autowired
 	private ModelRepository modelRepository;
+
+	@Autowired
+	private BrandRepository brandRepository;
 
 	// Create
 	@Transactional
@@ -99,24 +103,43 @@ public class AutomobileService {
 		automobile.setValuePerDay(automobileInsertDTO.getValuePerDay());
 		automobile.setReturned(true);
 
+		String brandName = automobileInsertDTO.getBrand().getName();
+
+		Brand brand = searchBrand(brandName);
+
 		String modelName = automobileInsertDTO.getModel().getName();
 
-		Optional<Model> optionalModel = modelRepository.findByNameIgnoreCase(modelName);
+		Model model = searchModel(modelName);
+		model.setBrand(brand);
 
-		Brand brand = new Brand(automobileInsertDTO.getBrand().getId(), automobileInsertDTO.getBrand().getName());
+		automobile.setModel(model);
+
+	}
+
+	private Brand searchBrand(String brandName) {
+
+		Optional<Brand> optionalBrand = brandRepository.findByNameIgnoreCase(brandName);
+
+		if (optionalBrand.isEmpty()) {
+			Brand newBrand = new Brand();
+			newBrand.setName(brandName);
+			return brandRepository.save(newBrand);
+		} else {
+			return optionalBrand.get();
+		}
+
+	}
+
+	private Model searchModel(String modelName) {
+
+		Optional<Model> optionalModel = modelRepository.findByNameIgnoreCase(modelName);
 
 		if (optionalModel.isEmpty()) {
 			Model newModel = new Model();
 			newModel.setName(modelName);
-			newModel.setBrand(brand);
-			modelRepository.save(newModel);
-			automobile.setModel(newModel);
+			return modelRepository.save(newModel);
 		} else {
-			Model model = optionalModel.get();
-			model.setName(modelName);
-			model.setBrand(brand);
-			automobile.setModel(model);
+			return optionalModel.get();
 		}
 	}
-
 }

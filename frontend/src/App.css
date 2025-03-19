@@ -76,14 +76,6 @@ main {
   display: unset;
 }
 
-.form-item-input-select [data-dirty="true"][data-invalid="true"] .css-ywdw3x-control{
-  border: 2px solid #b11717;
-}
-
-.form-item-input-select [data-dirty="true"][data-invalid="true"] ~ div {
-  display: unset;
-}
-
 .form-global-error {
   border-radius: 5px;
   width: 100%;
